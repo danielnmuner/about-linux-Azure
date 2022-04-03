@@ -208,5 +208,5 @@ Extensión de paquetes: `.rpm`
 
 #### Distribuciones Linux
 ---
-![Linux](![image](https://user-images.githubusercontent.com/60556632/161408242-9d528580-838f-490e-b306-5dd18db629e4.png)
+![image](https://user-images.githubusercontent.com/60556632/161408242-9d528580-838f-490e-b306-5dd18db629e4.png)
 
