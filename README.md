@@ -7,7 +7,7 @@
 - [Instrucciones para instalar Rocky](#instrucciones-para-instalar-rocky)
 - [Gestión del árbol de directorios](#gestión-del-árbol-de-directorios)
 - [Diferencias entre LESS CAT HEAD y TAIL para lectura de archivos](#diferencias-entre-less-cat-head-y-tail-para-lectura-de-archivos)
-- [Interacción con archivos y permisos](#interacción-con archivos-y-permisos)
+- [Interacción con archivos y permisos](#interacción-con-archivos-y-permisos)
 - [Conociendo las terminales en linux](#conociendo-las-terminales-en-linux)
 - [Manejo y monitoreo de procesos y recursos del sistema](#manejo-y-monitoreo-de-procesos-y-recursos-del-sistema)
 - [Monitoreo de recursos del sistema](#monitoreo-de-recursos-del-sistema)
@@ -21,7 +21,7 @@
 2. Importante: Se deben instalar las versiones LTS (Long Term Support), ya que ofrecen soporte de al menos 5 años
 
 ### **Instalación de Ubuntu Server**
-
+---
 #### Instalación de Ubuntu Server
 
 1. Descargar Virtual Box: [VirtualBox](https://www.virtualbox.org/)
@@ -37,7 +37,7 @@
 te aparezca el siguiente mensaje _Please enable the Virtual Machine Platform Windows feature and ensure virtualization is enabled in the BIOS._ pero no te preocupes puedes volver al estado inicial con `bcdedit /set hypervisorlaunchtype auto` no importa cuantas veces tengas que hacer este proceso solo recuerda **REINICIAR** tu pc para que los cambios se guarden correctamente. Revise muchos foros de VirtualBox y lo mejor que puedes hacer para realmente descubrir el problema es a través de los logs a los cuales puedes acceder, apagando la VM, click derecho sobre VM > Mostrar Trazas o Show Log. 👍
 
 ### Instrucciones para instalar Rocky 
-
+---
 #### Instalación de CentOS
 
 1. Descargar [VirtualBox](https://www.virtualbox.org/)
@@ -54,7 +54,7 @@ te aparezca el siguiente mensaje _Please enable the Virtual Machine Platform Win
 11. Creamos un usuario nuevo dando click en USER CREATION y finalizamos la instalación.
 
 ### Gestión del árbol de directorios
-
+---
 `pwd`: nos muestra nuestra ubicación actual en el árbol de directorios (Print Working Directory).  
 `ls`: nos muestra el contenido de las carpetas de nuestro sistema operativo. Podemos especificar alguna ruta o, por defecto, listar el contenido de la carpeta donde estamos trabajando.    
 `cd`: cambiar nuestra ubicación en el árbol de directorios (Change Directory). Usamos dos puntos (..) para referirnos al directorio padre y solo uno (.) para referirnos a nuestro directorio actual.  
@@ -64,7 +64,7 @@ te aparezca el siguiente mensaje _Please enable the Virtual Machine Platform Win
 `mv`: cambiar el nombre de nuestros archivos y carpetas.
 
 ### Diferencias entre LESS CAT HEAD y TAIL para lectura de archivos
-
+---
 `cat`: Muestra un archivo sin paginar.  
 `less`: Muestra un archivo paginado. Pulsando “/” y escribiendo una palabra, puedo buscar las coincidencias de la misma en el archivo. Con la tecla “n” me muevo entre coincidencias hacia adelante, y con `shift + n` me muevo entre coincidencias hacia atras. Con espacio cambio de página.  
 `tail`: Muestra las últimas 10 líneas de un archivo específico. Con la opción `-n` puedo modificar la cantidad de líneas que veo. Con la opción -f puedo poner los cambios en escucha.  
@@ -72,7 +72,7 @@ te aparezca el siguiente mensaje _Please enable the Virtual Machine Platform Win
 `man`: Muestra ayuda sobre comandos.  
 
 ### Interacción con archivos y permisos
-
+---
 - Con el comando `ls -l` podemos observar la lista de archivos de nuestro directorio actual con información un poco más detallada. El primer campo nos indica los diferentes permisos para cada archivo o directorio. Por ejemplo: `-rwxrw-r--`.
 
 - El primer carácter nos indica si tenemos un archivo (-), enlace simbólico (l) o directorio (d).
@@ -111,7 +111,7 @@ Para todos, `a`.
 Cambiar usuario `su username`
 
 ### Conociendo las terminales en linux
-
+---
 `chvt`: Cambia de terminal
 `tty`: Muestra la terminal actual
 `who`: Muestra los usuarios conectados a nuestro sistema
@@ -120,7 +120,7 @@ Cambiar usuario `su username`
 `kill`: Mata un proceso. Con el modificador -9 fuerzo el cierre del mismo
 
 ### Manejo y monitoreo de procesos y recursos del sistema
-
+---
 **Comandos**
 |
 `ps`: Muestra los procesos corriendo. Modificadores:
@@ -146,7 +146,7 @@ Cambiar usuario `su username`
 `COMMAND`: comando con todos sus argumentos
 
 ### Monitoreo de recursos del sistema
-
+---
 `top`: Muestra la siguiente información del sistema:
 load average (carga promedio): Provee una representación en números del 1 al número de procesadores que tenga nuestro servidor del uso de los mismos. Uso de la memoria, Cantidad de usuarios, Uso del CPU, Procesos, Etc.
 
@@ -161,7 +161,7 @@ load average (carga promedio): Provee una representación en números del 1 al n
 `sudo ps auxf | sort -nr -k 4 | head -5`: Muestra los 5 procesos que más uso hacen de la memoria RAM
 
 ### Análisis de los parámetros de red
-
+---
 **Comandos**
 
 `ifconfig`: Interface Configuration, muestra las tarjetas de red que tenemos y su direccionamiento específico
@@ -178,7 +178,7 @@ load average (carga promedio): Provee una representación en números del 1 al n
 `ip -6 a`: Muestra las direcciones IPv6
 
 ### Administración de paquetes acorde a la distribución
-
+---
 **Ubuntu server**
 
 Repositorios: `apt`
@@ -207,5 +207,6 @@ Extensión de paquetes: `.rpm`
 `yum search paquete`: Busca un paquete en un repositorio
 
 #### Distribuciones Linux
+---
 ![Linux](![image](https://user-images.githubusercontent.com/60556632/161408242-9d528580-838f-490e-b306-5dd18db629e4.png)
 
