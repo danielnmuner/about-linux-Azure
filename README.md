@@ -6,6 +6,10 @@
 - [Instalación de Ubuntu Server](#instalación-de-ubuntu-server)
 - [Instrucciones para instalar Rocky](#instrucciones-para-instalar-rocky)
 - [Gestión del árbol de directorios](#gestión-del-árbol-de-directorios)
+- [Diferencias entre LESS CAT HEAD y TAIL para lectura de archivos](#diferencias-entre-less-cat-head-y-tail-para-lectura-de-archivos)
+- [Interacción con archivos y permisos](#interacción-con archivos-y-permisos)
+- [Conociendo las terminales en linux](#conociendo-las-terminales-en-linux)
+- [Manejo y monitoreo de procesos y recursos del sistema](#manejo-y-monitoreo-de-procesos-y-recursos-del-sistema)
 
 
 
@@ -55,5 +59,86 @@ te aparezca el siguiente mensaje _Please enable the Virtual Machine Platform Win
 `touch`: nos ayuda a crear archivos desde la terminal.  
 `mkdir`: nos ayuda a crear carpetas desde la terminal.  
 `cp`: nos permite duplicar archivos y carpetas.  
-`mv`: cambiar el nombre de nuestros archivos y carpetas.  
+`mv`: cambiar el nombre de nuestros archivos y carpetas.
 
+### Diferencias entre LESS CAT HEAD y TAIL para lectura de archivos
+
+`cat`: Muestra un archivo sin paginar.  
+`less`: Muestra un archivo paginado. Pulsando “/” y escribiendo una palabra, puedo buscar las coincidencias de la misma en el archivo. Con la tecla “n” me muevo entre coincidencias hacia adelante, y con `shift + n` me muevo entre coincidencias hacia atras. Con espacio cambio de página.  
+`tail`: Muestra las últimas 10 líneas de un archivo específico. Con la opción `-n` puedo modificar la cantidad de líneas que veo. Con la opción -f puedo poner los cambios en escucha.  
+`head`: Muestra las primeras 10 lineas de un archivo específico. Con la opción `-n` puedo modificar la cantidad de líneas que veo.
+`man`: Muestra ayuda sobre comandos.  
+
+### Interacción con archivos y permisos
+
+- Con el comando `ls -l` podemos observar la lista de archivos de nuestro directorio actual con información un poco más detallada. El primer campo nos indica los diferentes permisos para cada archivo o directorio. Por ejemplo: `-rwxrw-r--`.
+
+- El primer carácter nos indica si tenemos un archivo (-), enlace simbólico (l) o directorio (d).
+
+- Los siguientes caracteres se dividen en grupos de 3: lectura **r**, escritura **w** y ejecución **x**. El primer grupo son los permisos del usuario que creó ese archivo, el segundo para el grupo al que pertenece este usuario y el tercero para cualquier otro usuario de tu sistema operativo.
+
+- Los grupos nos ayudan a darle los mismos permisos a diferentes usuarios sin necesidad de asignarlos a cada uno individualmente. Todos los usuarios que pertenezcan al grupo tendrán los mismos permisos.
+
+- Si en vez de estas letras encuentras un guion significa que ese usuario o grupo de usuarios no tiene permiso para esa acción en particular.
+
+Por ejemplo: `-rwxrw-r--` nos indica que trabajamos con un archivo. Todos los usuarios del sistema tienen permisos de lectura. El usuario creador y su grupo tienen permiso de escritura. Y solo el usuario creador puede ejecutar el archivo.
+
+También podemos encontrar estos permisos como 3 números del 1 al 7. Estos números son la suma de los 3 caracteres de permisos para cada usuario o grupo.
+
+`- = 0`
+`x = 1`
+`w = 2`
+`r = 4`
+Por lo tanto, los permisos de nuestro archivo de ejemplo serían: `7 (1+2+4) 6 (0+2+4) 4 (0+0+4)`.
+
+Para cambiar los permisos de un archivo o directorio podemos usar el comando `chmod` + a quién queremos añadir o quitar los permisos:
+
+El usuario propietario: `u`.
+El grupo, `g`.
+El resto de usuarios, `o`.
+Para todos, `a`.
+
+**Por ejemplo, para añadir permisos de ejecución a nuestro usuario propietario usamos:**
+
+`chmod u+x nombre-del-archivo`
+
+**También podemos cambiar al usuario propietario del archivo con el comando chown.**
+
+`sudo chown nuevo-usuario:grupo-usuarios nombre-del-archivo`
+
+Cambiar usuario `su username`
+
+### Conociendo las terminales en linux
+
+`chvt`: Cambia de terminal
+`tty`: Muestra la terminal actual
+`who`: Muestra los usuarios conectados a nuestro sistema
+`w`: Hace lo mismo que el comando who pero muestra más información
+`ps`: Muestra los procesos corriendo. Con los modificadores -ft y tty podemos filtrar para ver las conexiones de los usuarios
+`kill`: Mata un proceso. Con el modificador -9 fuerzo el cierre del mismo
+
+### Manejo y monitoreo de procesos y recursos del sistema
+
+**Comandos**
+|
+`ps`: Muestra los procesos corriendo. Modificadores:
+
+`aux`: Muestra todos los procesos
+`jobs`: Al igual que el comando anterior, muestra los procesos. A diferencia de ps, es un comando interno de la terminal
+`fg`: Abre un proceso que estaba pausado
+`nohup`: Genera un archivo llamado “nohup.out” que muestra toda la información que produjo un proceso
+`grep`: Nos ayuda a filtrar el resultado de un comando o el contenido de un archivo dependiendo de las palabras (o incluso expresión regular) que le indiquemo.  
+
+**Lo que significa cada parametro al ejecutar el comando** `ps aux`
+
+`USER`: usuario con el que se ejecuta el proceso
+`PID`: ID del proceso
+`%CPU`: porcentaje de tiempo que el proceso estuvo en ejecución desde que se inició
+`%MEM`: porcentaje de memoria física utilizada
+`VSZ`: memoria virtual del proceso medida en KiB
+`RSS`: “resident set size”, es la cantidad de memoria física no swappeada que la tarea a utilizado (en KiB)
+`TT`: terminal que controla el proceso (tty)
+`STAT`: código de estado del proceso (información detallada más adelante)
+`STARTED`: fecha de inicio del proceso
+`TIME`: tiempo de CPU acumulado
+`COMMAND`: comando con todos sus argumentos
