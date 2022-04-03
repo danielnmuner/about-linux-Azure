@@ -10,7 +10,9 @@
 - [Interacción con archivos y permisos](#interacción-con archivos-y-permisos)
 - [Conociendo las terminales en linux](#conociendo-las-terminales-en-linux)
 - [Manejo y monitoreo de procesos y recursos del sistema](#manejo-y-monitoreo-de-procesos-y-recursos-del-sistema)
-
+- [Monitoreo de recursos del sistema](#monitoreo-de-recursos-del-sistema)
+- [Análisis de los parámetros de red](#análisis-de-los-parámetros-de-red)
+- [Administración de paquetes acorde a la distribución](#administración-de-paquetes-acorde-a-la-distribución)
 
 
 ### **Distribuciones más utilizadas de Linux**
@@ -142,3 +144,68 @@ Cambiar usuario `su username`
 `STARTED`: fecha de inicio del proceso
 `TIME`: tiempo de CPU acumulado
 `COMMAND`: comando con todos sus argumentos
+
+### Monitoreo de recursos del sistema
+
+`top`: Muestra la siguiente información del sistema:
+load average (carga promedio): Provee una representación en números del 1 al número de procesadores que tenga nuestro servidor del uso de los mismos. Uso de la memoria, Cantidad de usuarios, Uso del CPU, Procesos, Etc.
+
+`free`: Me muestra información sobre la memoria de mi sistema. Con el modificador -h la información es más legible para un humano
+`du`: Muestra información sobre el disco duro. Con el modificador -hsc y un directorio especificado muestra el tamaño de ese directorio
+`htop`: Funciona como top pero funciona de forma más intuitiva
+
+**Comandos útiles**
+
+`cat /proc/cpuinfo | grep "processor"`: Muestra información sobre el CPU
+`sudo ps auxf | sort -nr -k 3 | head -5`: Muestra los 5 procesos que más uso hacen del CPU
+`sudo ps auxf | sort -nr -k 4 | head -5`: Muestra los 5 procesos que más uso hacen de la memoria RAM
+
+### Análisis de los parámetros de red
+
+**Comandos**
+
+`ifconfig`: Interface Configuration, muestra las tarjetas de red que tenemos y su direccionamiento específico
+`ip a`: IP Address Show, muestra las direcciones IP
+`hostname`: Como se identifica este equipo en la red
+`route -n`: Muestra cual es el dispositivo que me permite conectarme a internet
+`nslookup`: Muestra la dirección IP de un dominio determinado
+`curl`: Realiza consultas a un servidor
+`wget`: Permite descargar contenido de un servidor
+
+**Comandos útiles**
+
+`ip -4 a`: Muestra las direcciones IPv4
+`ip -6 a`: Muestra las direcciones IPv6
+
+### Administración de paquetes acorde a la distribución
+
+**Ubuntu server**
+
+Repositorios: `apt`
+Extensión de paquetes: `.deb`
+
+**Comandos:**
+
+`dpkg -l`: Lista todos los deb instalados en la máquina
+`dpkg -i paquete.deb`: Instala un paquete
+`dpkg -r paquete.deb`: Desinstala un paquete
+`dpkg-reconfigure paquete`: Permite configurar nuevamente un paquete
+`apt install paquete`: Instala un paquete desde un repositorio
+`apt search paquete`: Busca un paquete en un repositorio
+
+**Rocky**
+
+Repositorios: `yum`
+Extensión de paquetes: `.rpm`
+
+**Comandos:**
+
+`rpm -qa`: Lista todos los rpm instalados en la máquina
+`rpm -i paquete.rpm`: Instala un paquete
+`rpm -e paquete.rpm`: Desinstala un paquete
+`yum install paquete`: Instala un paquete desde un repositorio
+`yum search paquete`: Busca un paquete en un repositorio
+
+#### Distribuciones Linux
+![Linux](![image](https://user-images.githubusercontent.com/60556632/161408242-9d528580-838f-490e-b306-5dd18db629e4.png)
+
