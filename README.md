@@ -13,7 +13,7 @@
 - [Monitoreo de recursos del sistema](#monitoreo-de-recursos-del-sistema)
 - [Análisis de los parámetros de red](#análisis-de-los-parámetros-de-red)
 - [Administración de paquetes acorde a la distribución](#administración-de-paquetes-acorde-a-la-distribución)
-
+- [Manejo de paquetes en sistemas basados en Debian](#manejo-de-paquetes-en-sistemas-basados-en-bebian)
 
 ### **Distribuciones más utilizadas de Linux**
 1. Vamos a usar dos distribuciones de Linux: Ubuntu Server en su versión 18.04 y Rocky-8.5 RedHat.
@@ -209,3 +209,18 @@ Extensión de paquetes: `.rpm`
 ---
 ![image](https://user-images.githubusercontent.com/60556632/161408242-9d528580-838f-490e-b306-5dd18db629e4.png)
 
+### Manejo de paquetes en sistemas basados en Debian
+
+- `sudo apt upgrade` No se trata solo de hacer el upgrade debemos verificar que que es lo que va a actlizar y que eso no valla a afectar nuestro ambiente de programacion.
+- `sudo apt dist-upgrade` A diferencia del comando anterior este upgrade se realiza a nivel de Kernel, razón por lo cual se debe ser mas precavido puesto que podriamos romper algunos programas.
+
+- [LivePatch](https://ubuntu.com/livepatch) nos permite realizar actualizaciones en e sistema sin necesidad de realizar reinicios.
+- `sudo apt search mysql` Me permite buscar todos lo paquetes conformados por la keyword "mysql"
+- `sudo apt search "mysql-server$"` Es mas especifico que es importante colocar el signo `$`
+- `sudo apt-cache search "mysql-server$"` Es exactamente lo mismo que el comando anterior
+- `dpkg -l` Lista los paquetes de mi OS
+- `sudo dpkg-reconfigure tzdata` Toma el paquete `tzdata` para configurar la zona horaria, y asi podemos espesificar nuevamente que zona horario queremos usar.
+- `sudo snap search aws-cli` Snap es tambien un gestor de paquetes de debian, en este caso podemos buscar la consola de amazon, Snap fue desarrollado Canonical, los mismos creadores de Ubuntu ccon el tiempo se ha ido migrando de apt a snap paulatinamente.
+- `sudo snap refresh --list` Asi podemos ver todos los paquetes instalados en nuestro gestor snap
+- `sudo snap info aws-cli` Asi podemos consultar un paquete de snap en especifico
+- `sudo snap install canonical-livepatch` 
