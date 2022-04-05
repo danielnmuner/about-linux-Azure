@@ -16,6 +16,9 @@
 - [Manejo de paquetes en sistemas basados en Debian](#manejo-de-paquetes-en-sistemas-basados-en-bebian)
 - [Administración de software con YUM y RPM para CentOS](#administración-de-software-con-yum-y-rpm-para-centos)
 - [Nagios: Desempaquetado, descompresión, compilación e instalación de paquetes](#nagios-Desempaquetado-descompresión-compilación-e-instalación-de-paquetes)
+- [Los usuarios, una tarea vital en el proceso de administración del sistema operativo](#los-usuarios-una-tarea-vital-en-el-proceso-de-administración-del-sistema-operativo)
+- [Creando y manejando cuentas de usuario en el sistema operativo](#creando-y-manejando-cuentas-de-usuario-en-el-sistema-operativo)
+- [Entendiendo la membresía de los grupos](#entendiendo-la-membresía-de-los-grupos)
 
 ### **Distribuciones más utilizadas de Linux**
 1. Vamos a usar dos distribuciones de Linux: Ubuntu Server en su versión 18.04 y Rocky-8.5 RedHat.
@@ -268,7 +271,44 @@ Este comando creará una carpeta nagios-4.4.4. El nombre de la carpeta puede var
 5. `sudo make install-init` This installs the init script in /lib/systemd/system.
 6. `sudo make install-commandmode` This installs and configures permissions on the directory for holding the external command file.
 7. `sudo make install-config` This installs sample config files in /usr/local/nagios/etc. Remember, these are *SAMPLE* config files.
-8. `sudo make install-webconf` Permite habilitar el módulo Apache necesario para la interfaz web de Nagios -> Nagios/Apache conf file installed
+8. `sudo make install-webconf` Permite habilitar el módulo Apache necesario para la interfaz web de Nagios -> Nagios/Apache conf file installed.
+9. Por último, para administrar el servicio de nagios podemos usar los comandos `sudo systemctl (status, start, restart, reload, stop, enable, disable, list-dependencies) nagios`  
 
+- Si queremos ver que hay en el localhost desde la terminal podemos ejecutar el comando `curl localhost` o `curl localhost | grep apache` para ver si esta relacionado con apache.
+- Nagios ps si solo no es muy funcional a menos que le instalemos plugins por esta razon es importante hacerlo:
+
+### Los usuarios una tarea vital en el proceso de administración del sistema operativo
+
+- El comando `id` nos muestra el identificador único (uid) de cada usuario en nuestro sistema operativo. El ID 0 está reservado para el usuario root.
+En debian Ubuntu Server los Id's inician desde 1000 y en CentOS RedHat inician desde 500.
+
+- Con el comando `whoami` podemos ver con qué usuario estamos trabajando en este momento. Podemos ver todos los usuarios del sistema leyendo el archivo `cat /etc/passwd`. Aqui podemos ver todos los usuarios del sistema operativo que son necesarios para que el sistema operativo funcione.
+
+- Las contraseñas de los usuarios están almacenadas en el archivo `cat etc/shadow`, pero están cifradas. Y solo el usuario `root` tiene permisos de lectura/escritura.
+
+Para cambiar la contraseña de nuestros usuarios usamos el comando `passwd`.
+
+### Creando y manejando cuentas de usuario en el sistema operativo
+
+Comandos para administrar cuentas de usuarios:
+
+- `sudo useradd nombre-usuario`: crea un usuario sin asignarle inmediatamente alguna contraseña ni consultar más información. Debemos terminar de configurar esta cuenta a mano posteriormente.
+- `sudo adduser nombre-usuario`: crea un nuevo usuario con contraseña y algo más de información. También creará una nueva carpeta en la carpeta /home/.
+- `userdel nombre-usuario`: eliminar cuentas de usuarios.
+- `usermod`: modificar la información de alguna cuenta.
+
+> Nunca modifiques a mano el archivo /etc/passwd. Para administrar los usuarios debemos usar los comandos que estudiamos en clase.
+
+### Entendiendo la membresía de los grupos
+
+1. Los grupos nos ayudan a darle los mismos permisos a diferentes usuarios al mismo tiempo, sin necesidad de asignar el mismo permiso a cada usuario individualmente. Todos los usuarios que pertenezcan al mismo grupo tendrán los mismos permisos.
+
+2. Para cambiar de usuario sin necesidad de reiniciar el sistema podemos usar el comando `su - nombre-usuario`. **También podemos cambiar de usuario sin necesidad de saber su contraseña** usando el comando `sudo su - nombre-usuario`.
+
+3. Para ver a qué grupos pertenecen nuestros usuarios usamos el comando `groups nombre-usuario`. Para **agregar usuarios a un nuevo grupo** usamos el comando `sudo gpasswd -a nombre-usuario nombre-grupo`. Los eliminamos de la misma forma con `gpasswd -d`.
+
+4. Para esto también podemos usar el comando `sudo usermod -aG nombre-grupo nombre-usuario`. Recuerda que en este caso el orden en que escribimos el grupo y el ususario se invierte.
+
+5. Para listar los permisos de nuestros usuarios ejecutamos el comando `sudo -l`.
 
 
