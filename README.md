@@ -19,6 +19,7 @@
 - [Los usuarios, una tarea vital en el proceso de administración del sistema operativo](#los-usuarios-una-tarea-vital-en-el-proceso-de-administración-del-sistema-operativo)
 - [Creando y manejando cuentas de usuario en el sistema operativo](#creando-y-manejando-cuentas-de-usuario-en-el-sistema-operativo)
 - [Entendiendo la membresía de los grupos](#entendiendo-la-membresía-de-los-grupos)
+- [Usando PAM para el control de acceso de usuarios](#usando-pam-para-el-control-de-acceso-de-usuarios)
 
 ### **Distribuciones más utilizadas de Linux**
 1. Vamos a usar dos distribuciones de Linux: Ubuntu Server en su versión 18.04 y Rocky-8.5 RedHat.
@@ -296,7 +297,7 @@ Comandos para administrar cuentas de usuarios:
 - `sudo adduser nombre-usuario`: crea un nuevo usuario con contraseña y algo más de información. También creará una nueva carpeta en la carpeta /home/.
 - `userdel nombre-usuario`: eliminar cuentas de usuarios.
 - `usermod`: modificar la información de alguna cuenta.
-
+- `exit` para salir de un usuario y volver al inicial 
 > Nunca modifiques a mano el archivo /etc/passwd. Para administrar los usuarios debemos usar los comandos que estudiamos en clase.
 
 ### Entendiendo la membresía de los grupos
@@ -310,5 +311,27 @@ Comandos para administrar cuentas de usuarios:
 4. Para esto también podemos usar el comando `sudo usermod -aG nombre-grupo nombre-usuario`. Recuerda que en este caso el orden en que escribimos el grupo y el ususario se invierte.
 
 5. Para listar los permisos de nuestros usuarios ejecutamos el comando `sudo -l`.
+
+### Usando PAM para el control de acceso de usuarios
+
+- __PAM__ es un mecanismo para administrar a los usuarios de nuestro sistema operativo. Nos permite autenticar usuarios, controlar la cantidad de procesos que ejecutan cada uno, **verificar la fortaleza de sus contraseñas**, ver la hora a la que se conectan por SSH, entre otras.
+
+- Con el comando `pwscore` **podemos probar qué tan fuertes son nuestras contraseñas** Donde el puntaje va de 0 a 100. Recuerda que para usar este comando en sistemas basados en Ubuntu debemos instalar el paquete `sudo apt install libpwquality-tools`. Siempre que debemos validar nuestros passwords con `pwscore` antes de asignarlas a los usuarios
+
+- El comando `ulimit` nos ayuda a listar los permisos de nuestros usuarios. **Para limitar el número de procesos que nuestros usuarios pueden realizar ejecutamos** `ulimit -u max-numero-procesos`. Para verificar que realmente se limitoel numero de procesos entonces podemos crear un script **script.sh**
+
+```sh
+#!/bin/bash
+#Imprime en pantalla 'Hola'
+echo 'Hola'
+#Llama el comando anterior varias veces como un loop
+$0
+```
+- La consola ejecuta **script.sh** hasta que se han cumplido la cantidad maxima de procesos. 
+
+
+
+
+
 
 
