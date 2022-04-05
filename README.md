@@ -14,6 +14,8 @@
 - [Análisis de los parámetros de red](#análisis-de-los-parámetros-de-red)
 - [Administración de paquetes acorde a la distribución](#administración-de-paquetes-acorde-a-la-distribución)
 - [Manejo de paquetes en sistemas basados en Debian](#manejo-de-paquetes-en-sistemas-basados-en-bebian)
+- [Administración de software con YUM y RPM para CentOS](#administración-de-software-con-yum-y-rpm-para-centos)
+- [Nagios: Desempaquetado, descompresión, compilación e instalación de paquetes](#nagios-Desempaquetado-descompresión-compilación-e-instalación-de-paquetes)
 
 ### **Distribuciones más utilizadas de Linux**
 1. Vamos a usar dos distribuciones de Linux: Ubuntu Server en su versión 18.04 y Rocky-8.5 RedHat.
@@ -224,3 +226,49 @@ Extensión de paquetes: `.rpm`
 - `sudo snap refresh --list` Asi podemos ver todos los paquetes instalados en nuestro gestor snap
 - `sudo snap info aws-cli` Asi podemos consultar un paquete de snap en especifico
 - `sudo snap install canonical-livepatch` 
+### Administración de software con YUM y RPM para CentOS
+
+-`rpm -qa` Lista todos los paquetes de rpm `a` -> all
+- `rpm -qi bash` Busca `i` informacion del paquete bash.
+- `rpm -qc bash` Indica las rutas de los archivos involucrados en la configuracion `c` de Bash.
+- `rpm -e curl` Borra `e` o intenta borrar un paquete del repositorio si el sistema lo permite.
+
+### Nagios Desempaquetado descompresión compilación e instalación de paquetes
+
+> No todo el software que necesitamos se encuentra en los repositorios. Debido a esto, algunas veces debemos descargar el software, realizar un proceso de descompresión y desempaquetado para finalmente instalar la herramienta.
+
+> Instalación de algunas herramientas para manejar una base de datos MySQL 
+
+- `sudo apt install build-essential libgd-dev openssl libssl-dev unzip apache2 php gcc libdbi-perl libdbd-mysql-perl` 
+1. Build-essentials: The build-essentials packages are meta-packages that are necessary for compiling software.
+2. [libgd-dev](https://packages.debian.org/sid/libgd-dev): It allows your code to quickly draw images complete with lines, arcs, text, multiple colours, cut and paste from other images, flood fills, and write out the result as a PNG file.
+3. Unzip: Paradescomprimir archivos zip
+4. Apache2: The goal of this project is to provide a secure, efficient and extensible server that provides HTTP services in sync with the current HTTP standards. ASi podremos soportar nagios😀
+5. php: PHP is mainly focused on server-side scripting
+6. gcc: GCC development is a part of the GNU Project, aiming to improve the compiler used in the GNU system including the GNU/Linux variant. 
+7. [libdbi-perl](https://packages.debian.org/es/sid/libdbi-perl): Es un entorno de desarrollo en Perl que proporciona una interfaz común para acceder a varios sistemas de bases de datos de una manera uniforme. 
+8. [libdbd-mysql-perl](https://packages.debian.org/stretch/libdbd-mysql-perl): DBD::mysql is the Perl5 Database Interface driver for the MariaDB/MySQL database. In other words: DBD::mysql is an interface between the Perl programming language and the MySQL programming API that comes with the MariaDB/MySQL relational database management system.
+
+Instalación de Nagios: Nagios monitors your entire IT infrastructure to ensure systems, applications, services, and business processes are functioning properly.
+
+- `wget https://assets.nagios.com/downloads/nagioscore/releases/nagios-4.4.4.tar.gz -O nagioscore.tar.gz`
+
+Descomprimir y desempaquetar archivos con tar:
+
+- `tar xvzf nagioscore.tar.gz`
+
+Este comando creará una carpeta nagios-4.4.4. El nombre de la carpeta puede variar dependiendo de la versión que descargaste. Entrando a esta carpeta podemos ejecutar diferentes archivos y comandos para configurar el software y realizar la instalación.
+
+1. `sudo ./configure --with-https-conf=/etc/apache2/sites-enabled` . Permite configurar el software que vamos a instalar. `./configure` es un archivo dentro de la carpeta nagios-4.4.4. luego con el comando `--with-https-conf=` le indicamos que los queremos configurar con apache2 entregandole la ruta donde esta apache2.
+
+#### [The magic behind configure, make, make install](https://thoughtbot.com/blog/the-magic-behind-configure-make-make-install)
+
+3. `sudo make all` Verifica todos los archivos de configuracion anteriormente creados.
+4. `sudo make install-groups-users` then `sudo usermod -a -G nagios www-data` finally `sudo make install` By definition, if you are doing make install that means you are making a local install
+5. `sudo make install-init` This installs the init script in /lib/systemd/system.
+6. `sudo make install-commandmode` This installs and configures permissions on the directory for holding the external command file.
+7. `sudo make install-config` This installs sample config files in /usr/local/nagios/etc. Remember, these are *SAMPLE* config files.
+8. `sudo make install-webconf` Permite habilitar el módulo Apache necesario para la interfaz web de Nagios -> Nagios/Apache conf file installed
+
+
+
