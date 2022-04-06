@@ -22,6 +22,7 @@
 - [Usando PAM para el control de acceso de usuarios](#usando-pam-para-el-control-de-acceso-de-usuarios)
 - [Autenticación de clientes y servidores sobre SSH](#autenticación-de-clientes-y-servidores-sobre-ssh)
 - [Configurando DNS con bind](#configurando-dns-con-bind)
+- [Arranque, detención y recarga de servicios](#arranque-detención-y-recarga-de-servicios)
 
 ### **Distribuciones más utilizadas de Linux**
 1. Vamos a usar dos distribuciones de Linux: Ubuntu Server en su versión 18.04 y Rocky-8.5 RedHat.
@@ -416,3 +417,26 @@ En Junio de 1983 alrededor de 70 sitios estuvieron conectados a la red de cienci
   - Yandex DNS
   
 11. Existe una herramienta que nos permite seleccionar cuál será el **DNS** que debemos utilizar basados en nuestra ubicación y nuestras búsquedas, se llama `namebench`. Para ello sólo basta instalarlo y ejecutarlo en la máquina cliente y con esto obtendremos sugerencias al respecto. [namebanch](https://tools.ietf.org/html/rfc920)
+
+### Arranque detención y recarga de servicios
+---
+- El comando `systemctl` nos permite manejar los procesos de nuestro sistema operativo `Gestor de Arranque`. Nuestros servicios pueden estar activos (es decir, encendidos) o inactivos (apagados). También podemos configurar si están habilitados o deshabilitados para correr automáticamente con el arranque del sistema. E.g. `sudo systemctl status apache2` dependiento el estado el servcio se va o no a iniciar junto con el sistema operativo. 
+    - `stop`
+    - `start`
+    - `restart`
+    - `enable`
+    - `disable`
+    - `status`
+    - `list-units -t service --all` Lista unidaes de todos los servicios
+
+- `sudo systemctl status nombre-servicio`: ver el estado de nuestros servicios.
+- `sudo systemctl (enable, disable) nombre-servicio`: activar o desactivar el arranque automático de nuestros servicios.
+- `sudo systemctl (start, stop, restart) nombre-servicio`: encender, apagar o reiniciar los servicios.
+- `sudo systemctl list-units -t service --all`: ver todos los servicios del sistema.
+- El comando `journalctl` nos permite ver los logs de los procesos de nuestro sistema operativo. Recuerda que todos ellos están almacenados en la carpeta `/var/log/`.
+
+- `sudo journalctl -fu nombre-servicio`: ver los logs de nuestros servicios y hacer un seguimiento.
+- `sudo journalctl --disk-usage`: ver la cantidad de espacio que ocupan nuestros logs.
+- `sudo journalctl --list-boots`: muestra la lista de booteos de la computadora.
+- `sudo journalctl -p (critic, info, warning, error)`: filtrar los logs por el tipo de mensaje.
+- `sudo journalctl -o json`: ver los logs en formato JSON.
