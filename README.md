@@ -24,6 +24,7 @@
 - [Configurando DNS con bind](#configurando-dns-con-bind)
 - [Arranque, detención y recarga de servicios](#arranque-detención-y-recarga-de-servicios)
 - [NGINX y Apache en Ubuntu server](#nginx-y-apache-en-ubuntu-server)
+- [Instalación y configuración de NGINX](#instalación-y-configuración-de-nginx)
 
 ### **Distribuciones más utilizadas de Linux**
 1. Vamos a usar dos distribuciones de Linux: Ubuntu Server en su versión 18.04 y Rocky-8.5 RedHat.
@@ -511,10 +512,25 @@ Paso siguiente, dirígete al archivo de configuración de **NGINX** donde te ase
 Antes de realizar la elección de uno de los dos, deberías mirar el tipo de proyecto en el que estás trabajando y que se acople mejor a tus necesidades, es un proceso de evaluación y prueba en cada uno de los aspectos que esperamos como administradores de sistemas.
 Existen múltiples diferencias entre ambos proyectos, que tienen impacto real en el rendimiento y tiempo de configuración para lograr que el servicio quede funcionando perfectamente. Algunos prefieren NGINX por la sintaxis de configuración, otros eligen basado en las estadísticas presentadas y otros por simple experiencia con trabajos anteriores. Yo te recomiendo probar ambos y elegir según el proyecto, o quizás puedes usarlos ambos y sacar lo mejor de cada uno.
 
+### Instalación y configuración de NGINX
+---
+1. `sudo apt search "nginx$"` Verificamos si nginx esta en nuestro repo.
+2. `sudo apt update && sudo apt install nginx` Actualizamos e Instalamos
+  - Si revisamos los logs por el comando anterior es muy probable que despues de haber instalado **Apache** diaga algo como `Not attempting to start NGINX, port 80 is already in use`
 
+3. Si no supieramos que se esta ejecutando en el puero `80`, con el comando `sudo netstat -tulpn` sabremos que puertos se estan utilisando.
+4. Entonces primero apagamos **Apache**  `sudo systemctl stop apache2` luego iniciamos **NGINX** `sudo systemctl start nginx` y verificamos nuevamente el puerto `sudo netstat -tulpn` donde ahora **NGINX** debe estar usando el puerto 80.
+---
+**Archivos de configuracion de NGINX**
+1. En Linux todos los archivos de configuracion se encuentran en la carpeta `etc`, en este caso `ls etc/nginx` donde tendremos los siguntes archivos:
 
-
-
-
-
-
+> ```sh
+conf.d          koi-win            nginx.conf       sites-enabled
+fastcgi.conf    mime.types         proxy_params     snippets
+fastcgi_params  modules-available  scgi_params      uwsgi_params
+koi-utf    modules-enabled    sites-available  win-utf
+```
+  a. `nginx.conf` Aqui podemos ver la cantidad de procesos que vamos a lanzar, cual es el Process ID, y el Usuario con el que se ejecuta nginx `www-data` 
+  b. `sites-available/default` Nos muestra toda la configuracion del servidor, aqui podemos activar PHP, el puerto.
+  c. ``curl -I localhost` Head de la respuesta del Servidor.
+  d. `sites-enabled` Aquellos sitios activos en el momento.
