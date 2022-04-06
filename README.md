@@ -26,6 +26,7 @@
 - [NGINX y Apache en Ubuntu server](#nginx-y-apache-en-ubuntu-server)
 - [Instalación y configuración de NGINX](#instalación-y-configuración-de-nginx)
 - [¿Qué es NGINX Amplify?](#-¿qué-es-nginx-amplify?-)
+- [Monitoreo de MySQL con Nagios](#monitoreo-de-mysql-con-nagios)
 
 ### **Distribuciones más utilizadas de Linux**
 1. Vamos a usar dos distribuciones de Linux: Ubuntu Server en su versión 18.04 y Rocky-8.5 RedHat.
@@ -579,10 +580,22 @@ server{
 7. Se puede instalar en Ubuntu 20 de la siguiente manera: Después de darle los permisos de ejecución al archivo `install.sh` de abre con `vi o nano`
 se edita la linea que dice `packages_url=` se reemplaza la url de las comillas por esta `https://packages.amplify.nginx.com/py3/`
 Se ejecuta como dice en Nginx Amplify `API_KEY=#### sh ./install.sh`
-
 ![API_KEY](https://user-images.githubusercontent.com/60556632/162007896-926ed76b-73d5-4acd-a984-41ad55bb94f4.png)
-
 8. Reiniciar Nginx `sudo systemctl restart nginx`
 
+### Monitoreo de MySQL con Nagios
+---
+1. `sudo apt search "mysql-server$" buscamos si el paquete se encuentra en el repo de Ubuntu. Si la version que necesitamos no es encuentra en el repo entonces todo se debe hacer manual.
+2. Instalación de MySQL `sudo apt install mysql-server`
+3. Si perdemos acceso a mysql, entonces podemos ingresar a `cd /etc/mysql` donde encontraremos los siguientes archivos.
+![etc/mysql-server](https://user-images.githubusercontent.com/60556632/162011767-f9e6cca0-9af8-48ea-9118-a1ab508f8b7c.png)
+Abrimos `vim debian.cnf` alli encontraremos la informacion del usuario.
+![debian-cnf](https://user-images.githubusercontent.com/60556632/162012668-8de120c2-4584-4948-bea2-fe6772dd113d.png)
+3. Ahora si podemos conectarnos a la base de datos MySQL asi `mysql -u debian-sys-maint -p`, enter y luego colcamos el password `QEOJgXWSVq9ogcDw` 
+4. Salimos de mysql `exit` luego Asegurar el server de la base de datos `sudo mysql_secure_installation` aqui nos aseguramos de usar un password fuerte, luego verificar que Apache esté funcionando `sudo systemctl status apache2`
+5. Activar módulos **rewrite** y **cgi** `sudo a2enmod rewrite cgi`, asi nagios va a funcionar apropiadamente. Reiniciar Apache `sudo systemctl restart apache2`.
+6.  Crear un usuario para Nagios `sudo htpasswd -c /usr/local/nagios/etc/htpasswd.users nagiosadmin` luego reiniciamos apache `sudo systemctl restart apache2`, he iniciamos nagios `sudo systemctl start nagios`
+7.  Entrar a Nagios en nuestro navegador web, escribiendo como dirección: `127.0.0.1:8080/nagios` luego de haber hecho log in con nagiosadmin, los servios aun deben aparecer detenidos solo si no hemos instalado los plugins de nagios de lo contrario deben estar en verde.
+8. Nagios a diferencia de otros paquetes, tiene sus archivos de configuracion en `sudo /usr/local/nagios/bin/nagios -v /usr/loacl/nagios/etc/nagios.cfg`
 
 
