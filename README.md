@@ -217,6 +217,7 @@ Extensión de paquetes: `.rpm`
 ![image](https://user-images.githubusercontent.com/60556632/161408242-9d528580-838f-490e-b306-5dd18db629e4.png)
 
 ### Manejo de paquetes en sistemas basados en Debian
+---
 
 - `sudo apt upgrade` No se trata solo de hacer el upgrade debemos verificar que que es lo que va a actlizar y que eso no valla a afectar nuestro ambiente de programacion.
 - `sudo apt dist-upgrade` A diferencia del comando anterior este upgrade se realiza a nivel de Kernel, razón por lo cual se debe ser mas precavido puesto que podriamos romper algunos programas.
@@ -232,6 +233,7 @@ Extensión de paquetes: `.rpm`
 - `sudo snap info aws-cli` Asi podemos consultar un paquete de snap en especifico
 - `sudo snap install canonical-livepatch` 
 ### Administración de software con YUM y RPM para CentOS
+---
 
 -`rpm -qa` Lista todos los paquetes de rpm `a` -> all
 - `rpm -qi bash` Busca `i` informacion del paquete bash.
@@ -239,6 +241,7 @@ Extensión de paquetes: `.rpm`
 - `rpm -e curl` Borra `e` o intenta borrar un paquete del repositorio si el sistema lo permite.
 
 ### Nagios Desempaquetado descompresión compilación e instalación de paquetes
+---
 
 > No todo el software que necesitamos se encuentra en los repositorios. Debido a esto, algunas veces debemos descargar el software, realizar un proceso de descompresión y desempaquetado para finalmente instalar la herramienta.
 
@@ -268,6 +271,7 @@ Este comando creará una carpeta nagios-4.4.4. El nombre de la carpeta puede var
 
 #### [The magic behind configure, make, make install](https://thoughtbot.com/blog/the-magic-behind-configure-make-make-install)
 
+
 3. `sudo make all` Verifica todos los archivos de configuracion anteriormente creados.
 4. `sudo make install-groups-users` then `sudo usermod -a -G nagios www-data` finally `sudo make install` By definition, if you are doing make install that means you are making a local install
 5. `sudo make install-init` This installs the init script in /lib/systemd/system.
@@ -280,6 +284,7 @@ Este comando creará una carpeta nagios-4.4.4. El nombre de la carpeta puede var
 - Nagios ps si solo no es muy funcional a menos que le instalemos plugins por esta razon es importante hacerlo:
 
 ### Los usuarios una tarea vital en el proceso de administración del sistema operativo
+---
 
 - El comando `id` nos muestra el identificador único (uid) de cada usuario en nuestro sistema operativo. El ID 0 está reservado para el usuario root.
 En debian Ubuntu Server los Id's inician desde 1000 y en CentOS RedHat inician desde 500.
@@ -291,6 +296,7 @@ En debian Ubuntu Server los Id's inician desde 1000 y en CentOS RedHat inician d
 Para cambiar la contraseña de nuestros usuarios usamos el comando `passwd`.
 
 ### Creando y manejando cuentas de usuario en el sistema operativo
+---
 
 Comandos para administrar cuentas de usuarios:
 
@@ -302,6 +308,7 @@ Comandos para administrar cuentas de usuarios:
 > Nunca modifiques a mano el archivo /etc/passwd. Para administrar los usuarios debemos usar los comandos que estudiamos en clase.
 
 ### Entendiendo la membresía de los grupos
+---
 
 1. Los grupos nos ayudan a darle los mismos permisos a diferentes usuarios al mismo tiempo, sin necesidad de asignar el mismo permiso a cada usuario individualmente. Todos los usuarios que pertenezcan al mismo grupo tendrán los mismos permisos.
 
@@ -314,6 +321,7 @@ Comandos para administrar cuentas de usuarios:
 5. Para listar los permisos de nuestros usuarios ejecutamos el comando `sudo -l`.
 
 ### Usando PAM para el control de acceso de usuarios
+---
 
 - __PAM__ es un mecanismo para administrar a los usuarios de nuestro sistema operativo. Nos permite autenticar usuarios, controlar la cantidad de procesos que ejecutan cada uno, **verificar la fortaleza de sus contraseñas**, ver la hora a la que se conectan por SSH, entre otras.
 
@@ -341,15 +349,31 @@ ulimit -v ⟶ It will display the maximum memory size limit
 > ```
 
 ### Autenticación de clientes y servidores sobre SSH
-
+---
 **SSH** es un protocolo que nos ayuda a conectarnos a nuestros servidores desde nuestras máquinas para administrarlos de forma remota. ❌**NO** es muy recomendado usar otros protocolos como Telnet, ya que son inseguros y están deprecados.
 
-Con el comando ``ssh-keygen`` podemos generar llaves públicas y privadas en nuestros sistemas, de esta forma podremos conectarnos a servidores remotos o, si es el caso, permitir que otras personas se conecten a nuestra máquina.
+Con el comando ``ssh-keygen`` podemos generar llaves públicas y privadas en nuestros sistemas, de esta forma podremos conectarnos a servidores remotos o, si es el caso, permitir que otras personas se conecten a nuestra máquina. Para comprobar que la llave fue creada listamos `ls .ssh` alli debe aparacer tanto `id_rsa.pub` **Llave Publica** como `id_rsa` **Lave Privada**
 
 - Para conectarnos desde nuestra máquina a un servidor remoto debemos:
 
-- Ejecutar el comando `ssh-copy-id -i ubicación-llave-pública nombre-usuario@dirección-IP-servidor-remoto` y escribir nuestra `contraseña` para enviar nuestra llave pública al servidor.
-- Usar el comando `ssh nombre-usuario@dirección-IP-servidor-remoto` para conectarnos al servidor sin necesidad de escribir contraseñas.
-- También podemos usar el comando `ssh -v ...` para ver la información o los errores de nuestra conexión con el servidor. Puedes usar la letra `v` hasta **4 veces (-vvvv)** para leer más información.
+- Ejecutar el comando `ssh-copy-id -i ubicación-llave-pública nombre-usuario@dirección-IP-servidor-remoto` y escribir nuestra `contraseña` para enviar nuestra llave pública al servidor. Asi `ssh-copy-id -i ~/.ssh/id_rsa.pub danmuner@192.168.xx.xx`
 
-Las configuraciones de SSH se encuentran en el archivo `/etc/ssh/sshd_config`
+- Usar el comando `ssh danmuner@192.168.xx.xx` para conectarnos al servidor sin necesidad de escribir contraseñas.
+
+- `vim /etc/ssh/sshd_config` Asi podemos modificar otras opciones de ssh 
+
+Las configuraciones de SSH se encuentran en el archivo `/etc/ssh/sshd_config` como 
+```ssh
+# To disable tunneled clear text passwords, change to no here!
+PasswordAuthentication no
+#PermitEmptyPasswords no
+```
+> Ahora siempre que realizemos cambios sera necesario reiniciar `ssh`
+> `sudo systemctl stop ssh`
+> `sudo systemctl start ssh`
+
+- También podemos usar el comando `ssh -vvvv danmuner@192.168.xx.xx` para ver la información o los errores de nuestra conexión con el servidor.
+
+
+
+
