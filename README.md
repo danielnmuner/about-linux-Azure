@@ -25,6 +25,7 @@
 - [Arranque, detención y recarga de servicios](#arranque-detención-y-recarga-de-servicios)
 - [NGINX y Apache en Ubuntu server](#nginx-y-apache-en-ubuntu-server)
 - [Instalación y configuración de NGINX](#instalación-y-configuración-de-nginx)
+- [¿Qué es NGINX Amplify?](#-¿qué-es-nginx-amplify?-)
 
 ### **Distribuciones más utilizadas de Linux**
 1. Vamos a usar dos distribuciones de Linux: Ubuntu Server en su versión 18.04 y Rocky-8.5 RedHat.
@@ -524,13 +525,59 @@ Existen múltiples diferencias entre ambos proyectos, que tienen impacto real en
 **Archivos de configuracion de NGINX**
 1. En Linux todos los archivos de configuracion se encuentran en la carpeta `etc`, en este caso `ls etc/nginx` donde tendremos los siguntes archivos:
 
-> ```sh
+```sh
 conf.d          koi-win            nginx.conf       sites-enabled
 fastcgi.conf    mime.types         proxy_params     snippets
 fastcgi_params  modules-available  scgi_params      uwsgi_params
 koi-utf    modules-enabled    sites-available  win-utf
 ```
-  a. `nginx.conf` Aqui podemos ver la cantidad de procesos que vamos a lanzar, cual es el Process ID, y el Usuario con el que se ejecuta nginx `www-data` 
-  b. `sites-available/default` Nos muestra toda la configuracion del servidor, aqui podemos activar PHP, el puerto.
-  c. ``curl -I localhost` Head de la respuesta del Servidor.
-  d. `sites-enabled` Aquellos sitios activos en el momento.
+Los archivos mas usados son los siguientes:
+
+   a. `nginx.conf` Aqui podemos ver la cantidad de procesos que vamos a lanzar, cual es el Process ID, y el Usuario con el que se ejecuta nginx `www-data`.   
+   b. `sites-available/default` Nos muestra toda la configuracion del servidor, aqui podemos activar PHP, el puerto.  
+   c. `curl -I localhost` Head de la respuesta del Servidor.  
+   d. `sites-enabled` Aquellos sitios activos en el momento.  
+
+### ¿Qué es NGINX Amplify?
+---
+
+**NGINX Amplify** es una herramienta SaaS que permite realizar el monitoreo de NGINX y NGINX Plus. Los factores que permite monitorear son:
+1. El rendimiento
+2. Configuraciones con análisis estático
+3. Parámetros del sistema operativo, así como PHP-FPM
+4. Bases de datos y otros componentes. 
+
+Nginx Amplify es de fácil configuración y llevar control de nuestros servidores es agradable por los tableros de administración que posee.
+
+Con **NGINX [Amplify](https://www.nginx.com/products/nginx-amplify/)** podrás recolectar más de 100 métricas de NGINX y el sistema operativo. Amplify analiza los archivos de configuración propios del servidor, detecta configuraciones incorrectas y da recomendaciones de seguridad, también permite crear notificaciones que pueden ser enviadas por correo o a un canal de Slack con un simple clic.
+
+Los tableros de mando de [Amplify](https://www.nginx.com/products/nginx-amplify/) sirven para verificar la disponibilidad del sitio e identificar situaciones anómalas en diferentes periodos de tiempo. Otra característica a destacar es que NGINX Amplify te permite administrar varios sitios, direcciones IP y un nombre para identificarlo.
+
+### NGINX Amplify: Instalación y configuración de un servidor para producción
+---
+1. `sudo apt install pythonx.x` Instalamos python
+2. Movernos a la carpeta de Nginx `cd /etc/nginx`
+3. Modificar el archivo conf.d de la siguiente manera
+```sh
+sudo cat > conf.d/stub_status.conf
+server{
+	listen 127.0.0.1:80;
+	server_name 127.0.0.1;
+	location /nginx_status {
+		stub_status on;
+		allow 127.0.0.1;
+		deny all;
+	}
+}
+```
+4. Matar el proceso de Nginx `sudo kill -HUP `cat /var/run/nginx.pid`
+5. Reiniciar y habilitar Nginx `sudo systemctl restart nginx && systemctl enable nginx`
+6. Logearnos en el sitio web de Nginx Amplify y seguir las instrucciones de instalación: https://amplify.nginx.com, Iniciar el servicio de Nginx Amplify `service amplify-agent start`.
+7. Reiniciar Nginx `sudo systemctl restart nginx`
+
+- Se puede instalar en Ubuntu 20 de la siguiente manera: Después de darle los permisos de ejecución al archivo `install.sh` de abre con `vi o nano`
+se edita la linea que dice `packages_url=` se reemplaza la url de las comillas por esta `https://packages.amplify.nginx.com/py3/`
+Se ejecuta como dice en Nginx Amplify `API_KEY=’#####…’ sh ./install.sh`
+
+
+
