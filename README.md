@@ -572,12 +572,17 @@ server{
 ```
 4. Matar el proceso de Nginx `sudo kill -HUP `cat /var/run/nginx.pid`
 5. Reiniciar y habilitar Nginx `sudo systemctl restart nginx && systemctl enable nginx`
-6. Logearnos en el sitio web de Nginx Amplify y seguir las instrucciones de instalación: https://amplify.nginx.com, Iniciar el servicio de Nginx Amplify `service amplify-agent start`.
-7. Reiniciar Nginx `sudo systemctl restart nginx`
+6. Logearnos en el sitio web de Nginx Amplify y seguir las instrucciones de instalación: [nginx](https://amplify.nginx.com), Iniciar el servicio de Nginx Amplify `service amplify-agent start`.
 
-- Se puede instalar en Ubuntu 20 de la siguiente manera: Después de darle los permisos de ejecución al archivo `install.sh` de abre con `vi o nano`
+![login-nginx](https://user-images.githubusercontent.com/60556632/162007565-5cc22683-8510-4491-b301-45e32fb6f05f.png)
+
+7. Se puede instalar en Ubuntu 20 de la siguiente manera: Después de darle los permisos de ejecución al archivo `install.sh` de abre con `vi o nano`
 se edita la linea que dice `packages_url=` se reemplaza la url de las comillas por esta `https://packages.amplify.nginx.com/py3/`
-Se ejecuta como dice en Nginx Amplify `API_KEY=’#####…’ sh ./install.sh`
+Se ejecuta como dice en Nginx Amplify `API_KEY=#### sh ./install.sh`
+
+![API_KEY](https://user-images.githubusercontent.com/60556632/162007896-926ed76b-73d5-4acd-a984-41ad55bb94f4.png)
+
+8. Reiniciar Nginx `sudo systemctl restart nginx`
 
 
 
