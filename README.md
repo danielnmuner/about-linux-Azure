@@ -34,6 +34,7 @@
 - [Crontab](#crontab)
 - [Entendiendo la gestión de vulnerabilidades](#entendiendo-la-gestión-de-vulnerabilidades)
 - [¿Qué es una superficie de ataque? Principio del menor privilegio](#¿-qué-es-una-superficie-de-ataque-?-principio-del-menor-privilegio)
+- [Configuración de Node.js en un ambiente productivo](#configuración-de-node-.-js-en-un-ambiente-productivo)
 
 ### **Distribuciones más utilizadas de Linux**
 1. Vamos a usar dos distribuciones de Linux: Ubuntu Server en su versión 18.04 y Rocky-8.5 RedHat.
@@ -892,12 +893,100 @@ La **Superficie de Ataque** es el conjunto de vulnerabilidades o datos conocidos
 
 - [Aprende a auditar-seguridad-Linux](https://www.welivesecurity.com/la-es/2014/09/01/tutorial-de-lynis-aprende-auditar-seguridad-linux/)
 
+### Configuración de Node.js en un ambiente productivo
+---
+0. Que es [Node.js](https://www.luisllamas.es/que-es-node-js/)
+1. `git clone https://github.com/edisoncast/linux-platzi`: Clonar el repositorio necesario para realizar la clase.
+2. `sudo apt install nodejs npm`: Instalar Node.js y npm.
+3. `curl -sL https://deb.nodesource.com/setup_10.x -o node_setup.sh`: Posicionados en el home, descargar Node 10.
+4. `sudo bash node_setup.sh`: Instalar Node 10
+5. `sudo apt install gcc g++ make`: Instalar gcc, g++ y make
+6. `sudo apt install -y nodejs`: Finalizar el proceso de instalación de la versión 10 de Node.
+7. `sudo adduser nodejs`: Agregar el usuario nodejs si todavía no lo creaste.
+8. `node server.js`: En la carpeta de linux-platzi, ejecutar el archivo server.js.
+9. Crear un archivo de configuración para el servicio de Node.
 
+```sh
+sudo vim /lib/systemd/system/platzi@.service
 
+# Una vez creado el archivo, llenarlo con la siguiente información
 
+[Unit]
+Description=Balanceo de carga para Platzi
+Documentation=https://github.com/edisoncast/linux-platzi
+After=network.target
 
+[Service]
+Enviroment=PORT=%i
+Type=simple
+User=nodejs
+WorkingDirectory=/home/nodejs/linux-platzi
+ExecStart=/usr/bin/node /home/nodejs/linux-platzi/server.js
+Restart-on=failure
 
+[Install]
+WantedBy=multi-user.target
+```
+- Ver lectura sobre [Anatomía de un archivo de configuración de systemd](https://www.digitalocean.com/community/tutorials/understanding-systemd-units-and-unit-files).
 
+### Configuración de NGINX para la aplicación de Node.js
+---
 
-
+1. Cambiar el usuario a nodejs `sudo su - nodejs`.
+2. Clonar el repositorio necesario para la clase `git clone https://github.com/edisoncast/linux-platzi`.
+3. > Cambiar el nombre a la carpeta de linux-platzi a `server`.
+   > Corregir los errores en el archivo de configuración del servicio en `/lib/systemd/system/platzi@.service`.
+   > Iniciar el servicio debemos estar en la carpeta `/server/configuracion_servidor/bash`.
+   > `./enable.sh`
+   > ./start.sh
+ 4. Iniciar el servicio de Nginx Apagar antes Apache si es necesario `sudo systemctl start nginx`.
+ 5. Una vez en la carpeta `/etc/nginx/sites-available/` eliminar el contenido de la configuración de Nginx `sudo truncate -s0 default`.
+ 6.Editar el archivo de configuración.
  
+ ```sh
+ sudo vim default
+
+# Una vez en el archivo, escribir lo siguiente
+
+server  {
+	listen 80 default_server;
+	listen [::]:80 default_server;
+	
+	server_name _;
+	
+	location / {
+		proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+		proxy_set_header Host $host;
+		proxy_http_version 1.1;
+		proxy_pass http://backend;
+	}
+}
+
+upstream backend {
+	server 127.0.0.1:3000;
+	server 127.0.0.1:3001;
+	server 127.0.0.1:3002;
+	server 127.0.0.1:3003;
+}
+```
+7. Validamos que la configuración establecida fue correcta `sudo nginx -t`
+8. Reiniciamos nginx `sudo systemctl restart nginx`
+9. Probamos todo haciendo un `curl` a localhost `curl localhost`.
+10. Para que nginx pueda detectar los cambios, hay que **publicar** los cambios hechos en la carpeta `sites-enabled`, y la forma de hacer es reescribiendo el enlace simbólico, para que esto se pueda hacer, se debe eliminar primero el enlace simbólico previo creado: `sudo rm /etc/nginx/sites-enabled/default`
+
+### Lo que aprendiste sobre servidores linux - Concluciones
+---
+
+Aprendimos a instalar paquetes desde diferentes distribuciones de Linux, utilizar comandos básicos, manejar usuarios y permisos, proteger nuestros servidores de diferentes vulnerabilidades, administrar procesos y servicios, escribir scripts en Bash para automatizar tareas, entre otras.
+
+Te recomendamos continuar tu ruta de aprendizaje profesional con los siguientes cursos:
+
+- [Curso de Programación en Bash Shell](https://platzi.com/cursos/bash-shell/)
+- [Curso Profesional de DevOps](https://platzi.com/cursos/devops/)
+- [Carrera de Administración de Servidores y DevOps](https://platzi.com/servidores/)
+- [Carrera de Amazon Web Services](https://platzi.com/aws/)
+- [Carrera de Seguridad Informática](https://platzi.com/seguridad-informatica/)
+
+
+
+
