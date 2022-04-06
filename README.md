@@ -31,6 +31,8 @@
 - [Los logs, nuestros mejores amigos](#los-logs-nuestros-mejores-amigos)
 - [Las bases de bash](#las-bases-de-bash)
 - [Automatizando tareas desde la terminal](#automatizando-tareas-desde-la-terminal)
+- [Crontab](#crontab)
+- [Entendiendo la gestión de vulnerabilidades](#entendiendo-la-gestión-de-vulnerabilidades)
 
 ### **Distribuciones más utilizadas de Linux**
 1. Vamos a usar dos distribuciones de Linux: Ubuntu Server en su versión 18.04 y Rocky-8.5 RedHat.
@@ -804,6 +806,44 @@ function restore_backup {
 - La función `log` lee los dos argumentos recibidos y crea otra variable con la fecha de ese momento, para después hacer una salida `echo` especificando que es un error `>&2`. **Errores1 Errores2**
 
 - En clonclusión se crearon las funciones `run` y `assert_is_installed` para saber si ciertos paquetes que se usarán están insatalados, y las funciones `log_error` y `log` para el manejo de errores.
+
+### Crontab
+---
+Para ejecutar nuestra tarea de copia de seguridad debemos hacer uso de cron, el cual es un administrador regular de procesos en segundo plano que comprueba si existen tareas para ejecutar, teniendo en cuenta la hora del sistema.  
+
+Las configuraciones de las tareas a ejecutar se almacenan en el archivo crontab que puede ser editado con el comando `crontab -e`, si requerimos listar las tareas que tenemos configuradas ejecutamos `crontab -l`.  
+
+A continuación te muestro lo que se imprime en la pantalla al correr el comando `crontab -e`.
+
+![crontab](https://user-images.githubusercontent.com/60556632/162059566-fe86b989-5e46-4eb2-b41b-d84d75d47196.png)
+
+- Para establecer una tarea automatizada con cron se debe seguir un formato específico para definir una tarea como se muestra a continuación:
+
+![formato-específico](https://user-images.githubusercontent.com/60556632/162059658-f5761587-9cc5-40ed-8408-64ab2f3f82d4.png)
+
+- Lo siguiente sería definir la periodicidad de nuestro cron, para ello podemos hacer pruebas en el sitio [crontab](https://crontab.guru). Nosotros queremos que nuestra copia se ejecute todos los días a las 03:15 de la mañana, pues es el momento donde menos tráfico tenemos en nuestra base de datos.
+
+### Entendiendo la gestión de vulnerabilidades
+---
+**Malas prácticas**
+
+1. No desactivar el usuario root
+2. Realizar un login con usuario y password (sin ssh)
+3. No validar la versión de software usada
+4. Utilizar comandos r* o telnet
+5. No identificar los servicios y puertos abiertos en el S.O
+6. No gestionar correctamente los permisos de los usuarios.  
+
+
+**Buenas prácticas**
+
+1. Verificar las actualizaciones de seguridad y realizar la instalación de las mismas.
+
+- CentOS `yum check-update --security` y `yum update security`
+- Ubuntu `apt update` y `apt upgrade`
+
+**Recuerda que la seguridad informática no es un producto, sino un proceso constante**.
+
 
 
 
