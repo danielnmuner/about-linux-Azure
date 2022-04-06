@@ -28,6 +28,8 @@
 - [¿Qué es NGINX Amplify?](#-¿qué-es-nginx-amplify?-)
 - [Monitoreo de MySQL con Nagios](#monitoreo-de-mysql-con-nagios)
 - [Configuración de Nagios](#configuración-de-nagios)
+- [Los logs, nuestros mejores amigos](#los-logs-nuestros-mejores-amigos)
+- [Las bases de bash](#las-bases-de-bash)
 
 ### **Distribuciones más utilizadas de Linux**
 1. Vamos a usar dos distribuciones de Linux: Ubuntu Server en su versión 18.04 y Rocky-8.5 RedHat.
@@ -639,6 +641,61 @@ define service {
 ```
 6. Reiniciar nagios `sudo systemctl restart nagios` si algo no funciona entonces podemos apagar y encender nagios.
 
+### Los logs nuestros mejores amigos
+---
+1. `find /var/log/ -name "*.log" -type f` Busca todos los `.log` en la ruta `/var/log/`
 
+2. Comandos útiles
+- find `/var/log/ -iname *.log -type f`: Muestra los archivos de log que tenemos en el sistema
+- `sudo find /etc/ -mtime 10 2`: Muestra los archivos de configuración que tuvieron salidas de error en los últimos diez minutos
+- `awk '{print $1}' /var/log/nginx/access.log | sort | uniq -c | sort -nr`: Muestra las IP’s que se conectaron con nuestro servidor nginx
+- `awk '{print $9}' /var/log/nginx/access.log | sort | uniq -c | sort -nr`: Muestra los errores que surgieron en nuestro servidor nginx.
+
+### Otros servicios de logs
+---
+1. Un servidor puede llegar a registrar millones de líneas de datos en un log. Para facilitar el monitoreo y mantenimiento podemos usar herramientas o tecnologías que nos permitan tomar esta información sin procesar y convertirla en visualizaciones fáciles de consumir y entender.
+
+2. El primer paso para seleccionar las herramientas que usaremos. Lo primero es tener una base de conocimiento que nos identifique el servidor en circunstancias normales y de esta forma con la ayuda de estas herramientas detectar preocupaciones o incluso tendencias con una sola mirada.
+
+Algunas herramientas que podemos tener en distribuciones Linux son:
+
+3. **[Collectd](https://collectd.org/wiki/index.php/Table_of_Plugins)**
+Es un demonio que recopila datos de rendimiento, y junto con la herramienta collectd web, es capaz de generar reportes que se pueden visualizar en un navegador WEB. Se puede establecer un servidor y a él conectarle un número ilimitado de clientes remotos.
+
+4. **Nmon**
+Obtener visualizaciones rápidas de mi sistema. Se instala con apt install nmon. Tiene una característica especial que me permite guardar en archivos de formato nmon que se pueden convertir en información que puede ser presentada en html con la herramienta nmonchart. `Nmon -f -s 15 -c 20`, se recolectará información por cinco minutos mostrados en incrementos de 15 segundos 20 veces.
+
+5. **Munin**
+Es una herramienta para analizar el rendimiento del servidor que contiene gráficos históricos para facilitar la identificación de problemas en el tiempo.
+
+6. **Grafana**
+Permite consultar, visualizar, alertar y ante todo entender las métricas de negocio sin importar dónde están almacenadas. Se puede crear, explorar y compartir tableros de mando con el equipo basados en el principio de la cultura orientada a los datos.
+
+7. También podemos instalar agentes de monitoreo en los servidores, algunas opciones son [newrelic](https://newrelic.com/) y [datadoghq](https://www.datadoghq.com)/, podemos tener una prueba del servicio y analizar el rendimiento de nuestro servidor.
+8. Cabe aclarar que también necesitará algún sistema de alarma automatizado que nos envíe alertas de forma proactiva cuando las cosas no estén funcionando bien.
+
+### Las bases de bash
+---
+Como administradores de bases de datos Linux debemos saber automatizar tareas, es por esta razon que utilizaremos pyscripts.
+
+1. **¿Qué es Bash?** Es una **shell** de **UNIX** y el intérprete de comandos por defecto en la mayoría de distribuciónes GNU/Linux. Se pueden crear scripts, los cuales por convención terminan con la extensión `.sh`
+2. Creamos un script y debe tener la siguiente cabecera para el caso de bash `#!bin/bash` luego si colocamos el codigo. Ejecutamos asi `./script.sh`. Aprender a programar en bash es muy necesario para el dia a dia de los administradores de servidores Linux.
+
+### Variables de Entorno
+---
+- `env`: Muestra las variables del sistema operativo
+- `$PATH`: Guarda las rutas donde se ubican los archivos binarios que pueden ejecutarse directamente en la consola
+- Verificar la cantidad de espacio en el S.O.
+```sh
+#!/bin/bash
+# Verificar la cantidad de espacio en el S.O
+# Desarrollado por Jhon Edison
+CWD=$(pwd)
+FECHA=$(date +"%F%T")
+echo $FECHA
+df -h | grep /dev > uso_disco_"$FECHA".txt
+df -h | grep /dev/sda2 >> uso_disco_"$FECHA".txt
+echo "Se ha generado un archivo en la ubicación $CWD"
+```
 
 
