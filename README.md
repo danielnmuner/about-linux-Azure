@@ -621,10 +621,12 @@ sudo vim /usr/local/nagios/etc/objects/commands.cfg
 define command {
 	command_name check_mysql_health
 	command_line $USER1$/check_mysql_health -H $ARG4$ --username $ARG1$ --password $ARG2$ --port $ARG5$  --mode $ARG3$
+#ARG Se refiere a la posicion de los datos a ingresar como --username en la posicion 1 luego password en la posicion 2,etc.
 }
 ```
 5. Crear el archivo que nombrarmos en la configuración en el archivo `nagios.cfg`
 ```sh
+#El archivo debe estar vacio.v 
 sudo vim /usr/local/nagios/etc/objects/mysqlmonitoring.cfg
 #Ya en el archivo, agregar las siguientes líneas
 
@@ -635,8 +637,7 @@ define service {
 	check_command check_mysql_health!nagios!nagiosplatziS14*!connection-time!127.0.0.1!3306!
 }
 ```
-6. Reiniciar nagios `sudo systemctl restart nagios
-`
+6. Reiniciar nagios `sudo systemctl restart nagios` si algo no funciona entonces podemos apagar y encender nagios.
 
 
 
