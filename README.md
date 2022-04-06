@@ -20,6 +20,7 @@
 - [Creando y manejando cuentas de usuario en el sistema operativo](#creando-y-manejando-cuentas-de-usuario-en-el-sistema-operativo)
 - [Entendiendo la membresía de los grupos](#entendiendo-la-membresía-de-los-grupos)
 - [Usando PAM para el control de acceso de usuarios](#usando-pam-para-el-control-de-acceso-de-usuarios)
+- [Autenticación de clientes y servidores sobre SSH](#autenticación-de-clientes-y-servidores-sobre-ssh)
 
 ### **Distribuciones más utilizadas de Linux**
 1. Vamos a usar dos distribuciones de Linux: Ubuntu Server en su versión 18.04 y Rocky-8.5 RedHat.
@@ -328,10 +329,27 @@ echo 'Hola'
 $0
 ```
 - La consola ejecuta **script.sh** hasta que se han cumplido la cantidad maxima de procesos. 
+- A continuacion algunos de los flags de `ulimit`
+> ```sh
+> ulimit -n ⟶ It will display number of open files limit
+ulimit -c ⟶ It display the size of core file
+umilit -u ⟶ It will display the maximum user process limit for the logged in
+user.
+ulimit -f ⟶ It will display the maximum file size that the user can have.
+umilit -m ⟶ It will display the maximum memory size for logged in user.
+ulimit -v ⟶ It will display the maximum memory size limit 
+> ```
 
+### Autenticación de clientes y servidores sobre SSH
 
+**SSH** es un protocolo que nos ayuda a conectarnos a nuestros servidores desde nuestras máquinas para administrarlos de forma remota. ❌**NO** es muy recomendado usar otros protocolos como Telnet, ya que son inseguros y están deprecados.
 
+Con el comando ``ssh-keygen`` podemos generar llaves públicas y privadas en nuestros sistemas, de esta forma podremos conectarnos a servidores remotos o, si es el caso, permitir que otras personas se conecten a nuestra máquina.
 
+- Para conectarnos desde nuestra máquina a un servidor remoto debemos:
 
+- Ejecutar el comando `ssh-copy-id -i ubicación-llave-pública nombre-usuario@dirección-IP-servidor-remoto` y escribir nuestra `contraseña` para enviar nuestra llave pública al servidor.
+- Usar el comando `ssh nombre-usuario@dirección-IP-servidor-remoto` para conectarnos al servidor sin necesidad de escribir contraseñas.
+- También podemos usar el comando `ssh -v ...` para ver la información o los errores de nuestra conexión con el servidor. Puedes usar la letra `v` hasta **4 veces (-vvvv)** para leer más información.
 
-
+Las configuraciones de SSH se encuentran en el archivo `/etc/ssh/sshd_config`
