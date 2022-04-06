@@ -27,6 +27,7 @@
 - [Instalación y configuración de NGINX](#instalación-y-configuración-de-nginx)
 - [¿Qué es NGINX Amplify?](#-¿qué-es-nginx-amplify?-)
 - [Monitoreo de MySQL con Nagios](#monitoreo-de-mysql-con-nagios)
+- [Configuración de Nagios](#configuración-de-nagios)
 
 ### **Distribuciones más utilizadas de Linux**
 1. Vamos a usar dos distribuciones de Linux: Ubuntu Server en su versión 18.04 y Rocky-8.5 RedHat.
@@ -597,5 +598,46 @@ Abrimos `vim debian.cnf` alli encontraremos la informacion del usuario.
 6.  Crear un usuario para Nagios `sudo htpasswd -c /usr/local/nagios/etc/htpasswd.users nagiosadmin` luego reiniciamos apache `sudo systemctl restart apache2`, he iniciamos nagios `sudo systemctl start nagios`
 7.  Entrar a Nagios en nuestro navegador web, escribiendo como dirección: `127.0.0.1:8080/nagios` luego de haber hecho log in con nagiosadmin, los servios aun deben aparecer detenidos solo si no hemos instalado los plugins de nagios de lo contrario deben estar en verde.
 8. Nagios a diferencia de otros paquetes, tiene sus archivos de configuracion en `sudo /usr/local/nagios/bin/nagios -v /usr/loacl/nagios/etc/nagios.cfg`
+
+### Configuración de Nagios
+---
+1. Nos conectamos a mysql `sudo mysql`
+2. Crear un usuario 
+```sql
+GRANT SELECT ON *.* TO 'nagios'@'localhost' IDENTIFIED BY 'nagiosplatziS14*'; 
+-- (nagiosplatziS14*) es un Password no un usuario.
+FLUSH PRIVILEGES; 
+```
+3. Configurar Nagios
+```sh
+sudo vim /usr/local/nagios/etc/nagios.cfg
+#Ya dentro del archivo, agregar la siguiente linea:
+cfg_file=/usr/local/nagios/etc/objects/mysqlmonitoring.cfg
+```
+4. Crear comandos para hacer uso de Nagios
+```sh
+sudo vim /usr/local/nagios/etc/objects/commands.cfg
+#Ya dentro del archivo, agregar las siguientes líneas:
+define command {
+	command_name check_mysql_health
+	command_line $USER1$/check_mysql_health -H $ARG4$ --username $ARG1$ --password $ARG2$ --port $ARG5$  --mode $ARG3$
+}
+```
+5. Crear el archivo que nombrarmos en la configuración en el archivo `nagios.cfg`
+```sh
+sudo vim /usr/local/nagios/etc/objects/mysqlmonitoring.cfg
+#Ya en el archivo, agregar las siguientes líneas
+
+define service {
+	use local-service
+	host_name localhost
+	service_description MySQL connection-time
+	check_command check_mysql_health!nagios!nagiosplatziS14*!connection-time!127.0.0.1!3306!
+}
+```
+6. Reiniciar nagios `sudo systemctl restart nagios
+`
+
+
 
 
