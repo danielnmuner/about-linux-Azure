@@ -4,21 +4,23 @@
    - [Niveles de Servicio de Azure](#niveles-de-servicio-de-azure-y-certificaciones)
    - [Qué es la nube: ventajas y características](#qué-es-la-nube-:-ventajas-y-características)
    - [Modelos de servicio: IaaS, PaaS, SaaS y serverless](#modelos-de-servicio-:-iaas-,-paas-,-saas-y-serverless)
+   - [Tipos de nube: pública, privada e híbrida](#tipos-de-nube-:-pública-,-privada-e-híbrida)
+
+- Componentes de Azure
 
 ### Niveles de Servicio de Azure y Certificaiones
 ---
 1. Fundamentals
 2. Associate
 3. Expert
-4. Specialty
-   - **Roles**
-   - Developer [Azure Developer, Dymamics 365, Power Platform, IoT Developer]
-   - Administrator [Azure Administrator, Teams Admin, Security Admin]
-   - Solutions Architec [Power Platforms]
-   - Data Engineer [Azure Data Engineer Associate]
-   - Data Scientist [Azure Data Scientist Associate]
-   - AI Engineer [Azure AI Engineer Associate]
-   - DevOps
+4. Specialty and Certifications
+   > - Developer [Azure Developer, Dymamics 365, Power Platform, IoT Developer]
+   > - Administrator [Azure Administrator, Teams Admin, Security Admin]
+   > - Solutions Architec [Power Platforms]
+   > - Data Engineer [Azure Data Engineer Associate]
+   > - Data Scientist [Azure Data Scientist Associate]
+   > - AI Engineer [Azure AI Engineer Associate]
+   > - DevOps
 
 ### Qué es la nube: ventajas y características
 ---
@@ -46,7 +48,7 @@ La nube son instalaciones en las cuales cada una tiene de forma independiente en
 
 ### Modelos de servicio: IaaS, PaaS, SaaS y Serverless
 ---
-- **On-Premise** Local-MiPC -Serverless
+- **On-Premise** Local-MiPC-Hardware
 - **Infraestructura como servicio-IaaS**
 - **Plataforma como servicio-PaaS**
 - **Software como Servicio-SaaS**
@@ -88,6 +90,33 @@ FaaS es esencialmente una versión más simple de PaaS. Conocida como una arquit
 
 **VaaS (virtualización como servicio)**
 > La virtualización es un componente clave de la computación en nube moderna. VaaS ofrece máquinas virtuales aisladas (VM), alojadas por el proveedor, que pueden personalizarse para satisfacer las necesidades de los clientes.
+
+### Tipos de nube: pública, privada e híbrida
+---
+**Nube pública**
+- Accesible a todo el mundo
+- Son propiedad de un proveedor
+- Se distribuye a través de internet
+**Nube privada**
+- Accesible para miembros de una organización
+- Puede estar on-premise u hospedada
+**Nube híbrida**
+- Combinación de on-premise, nube pública y privada
+
+- **Escenarios on-premises**:
+- Banca (por ahora).
+- Milicia o agencias de integliencia.
+- Casos de uso donde se requiera un contar delay hyper bajo
+
+- **Escenarios hibridos**:
+- Entiendo que es el paso natural cuando se quiere migrar de on premise a la nube.
+- Que mi app corra on premise y si la demanda sube por encima de lo que soporto fisicamente, desborde en la nube.
+- Proveer Diaster Recovery a mi app (no estoy 100% seguro de esto).
+
+- **Escenarios Publicos**
+- Que mi app requiera elasticidad, digamos pueda soportar temporalidades como Black Friday.
+- Validar ideas de negocio rapidamente, digamos quiero lanzar mi app y necesito contar con un servidor que no tengo.
+- Lanzar mi app globalmente, digamos que quiero que mi app corra tan bien en Brazil como en Australia, con las distintas regiones podría hacerlo.
 
 
 
