@@ -30,6 +30,7 @@
 - [Configuración de Nagios](#configuración-de-nagios)
 - [Los logs, nuestros mejores amigos](#los-logs-nuestros-mejores-amigos)
 - [Las bases de bash](#las-bases-de-bash)
+- [Automatizando tareas desde la terminal](#automatizando-tareas-desde-la-terminal)
 
 ### **Distribuciones más utilizadas de Linux**
 1. Vamos a usar dos distribuciones de Linux: Ubuntu Server en su versión 18.04 y Rocky-8.5 RedHat.
@@ -697,5 +698,114 @@ df -h | grep /dev > uso_disco_"$FECHA".txt
 df -h | grep /dev/sda2 >> uso_disco_"$FECHA".txt
 echo "Se ha generado un archivo en la ubicación $CWD"
 ```
+
+### Automatizando tareas desde la terminal
+---
+En esta clase vamos a realizar un script que nos permita realizar una copia de seguridad de una base de datos **MYSQL**.  Leer [Crontab en Linux](https://geekflare.com/es/crontab-linux-with-real-time-examples-and-tools/) para automatizar otras tareas en la consola.
+
+
+
+```sh
+#!/bin/bash
+# Description: Shell script to restore a backup from Mysql
+#
+# Desarrollado: Para platzi by Jhon Edison Castro @edisoncast
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:bin:/usr/sbin:/usr/bin
+#La variable PATH describe las posibles rutas desde donde se podria ejecutar. 
+
+#Set -e Sirve para detener el script en caso de que el programa falle.
+set -e
+
+readonly SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+readonly SCRIPT_NAME="$(basename "$0")"
+
+run
+restore_backup
+
+function assert_is_installed {
+  local readonly name="$1"
+
+  if [[ ! $(command -v ${name}) ]]; then
+    log_error "The binary '$name' is required by this script but is not installed or in the system's PATH."
+    exit 1
+  fi
+}
+
+function log_error {
+  local readonly message="$1"
+  log "ERROR" "$message"
+}
+
+function log {
+  local readonly level="$1"
+  local readonly message="$2"
+  local readonly timestamp=$(date +"%Y-%m-%d %H:%M:%S")
+  >&2 echo -e "${timestamp} [${level}] [$SCRIPT_NAME] ${message}"
+}
+
+function run {
+  assert_is_installed "mysql"
+  assert_is_installed "mysqldump"
+  assert_is_installed "gzip"
+  assert_is_installed "aws"
+}
+
+function restore_backup {
+    local BAK="$(echo $HOME/restore)"
+    local MYSQL="$(which mysql)"
+    local GZIP="$(which gzip)"
+    local NOW=$(date +"%d-%m-%Y")
+    local BUCKET="xxxxx"
+    local DATABASE="xxxxxxx"
+    USER="xxxxxx"
+    PASS="xxxxxx"
+    HOST="xxxxxxxx"
+    DATABASE="xxxxx"
+
+    [ ! -d "$BAK" ] && mkdir -p "$BAK"
+
+    FILE=$BAK/$DATABASE.$NOW-$(date +"%T").gz
+
+    local SECONDS=0
+
+    aws configure set s3.signature_version s3v4
+    aws s3 sync "s3://$BUCKET" $BAK --exact-timestamps
+
+    cd $BAK
+
+    local FILE="$(find . -iname "*.gz" -type f -print0 | xargs --no-run-if-empty -0 stat -c "%y %n" | sort -r | head -n 1 |awk '{print $4}')"
+
+    gunzip < $FILE | $MYSQL -u $USER -h $HOST -p$PASS $DATABASE
+
+    duration=$SECONDS
+    echo "$(($duration / 60)) minutes and $(($duration % 60)) seconds elapsed."
+}
+```
+**Explicacion Víctor Macedo Becerril `estudiante platzi`**
+1. El objetivo del script es hacer un backup de una base de datos, para ello primero se debe verificar que estén instalados ciertos paquetes en el sistema operativo es lo que se ve en esta clase. Antes de continuar es importante saber la definición de funciones en programación. Una vez sabiendo esto, empezamos el análisis del código:
+
+- El profesor empezó con el comando
+
+- `set -e` simplemente para detener la ejecución del script por si hay alguna falla.
+
+- Después declaró dos variables de solo lectura. Estas son como variables **globales**, es decir, pueden llamarse aún estando dentro de funciones.
+
+- Después ejecuta dos funciones **run** y **make_backup**, estas dos funciones son declaradas más abajo en realidad en esta clase solo se ve la función **run**.
+
+- La función **run** ejecuta otra función `assert_is_insatalled`, la cual recibe como parámetro los nombres de paquetes que la función `assert_is_insatalled` se va a encargar de preguntar si están instalados.
+
+- La función `assert_is_insatalled` inicia con la declaración de una variable **name**, la cual lee el primer argumento `$1` que recibe la función `assert_is_insatalled` que es el nombre del paquete a averiguar si está instalado. Para saber si está instalado el paquete solo hace un condicional cuya condición es si el comando `command -v "paquete"`, da respuesta, si no da respuesta el comando, significa que no está instalado y ejecuta la función `log_error` con argumento `The binario …` y después de eso marca un error con el comando:
+
+`exit 1`
+
+- La función `log_error` define otra variable que lee el argumento recibido y llama a otra función `log` con dos argumentos.
+
+- La función `log` lee los dos argumentos recibidos y crea otra variable con la fecha de ese momento, para después hacer una salida `echo` especificando que es un error `>&2`. **Errores1 Errores2**
+
+- En clonclusión se crearon las funciones `run` y `assert_is_installed` para saber si ciertos paquetes que se usarán están insatalados, y las funciones `log_error` y `log` para el manejo de errores.
+
+
+
 
 
