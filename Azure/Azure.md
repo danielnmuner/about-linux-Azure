@@ -93,27 +93,35 @@ FaaS es esencialmente una versión más simple de PaaS. Conocida como una arquit
 
 ### Tipos de nube: pública, privada e híbrida
 ---
-**Nube pública**
+**Nube pública**  
+
 - Accesible a todo el mundo
 - Son propiedad de un proveedor
-- Se distribuye a través de internet
-**Nube privada**
+- Se distribuye a través de internet  
+
+**Nube privada**  
+
 - Accesible para miembros de una organización
-- Puede estar on-premise u hospedada
-**Nube híbrida**
+- Puede estar on-premise u hospedada  
+- 
+**Nube híbrida**  
+
 - Combinación de on-premise, nube pública y privada
 
-- **Escenarios on-premises**:
+**Escenarios on-premises**:  
+
 - Banca (por ahora).
 - Milicia o agencias de integliencia.
 - Casos de uso donde se requiera un contar delay hyper bajo
 
-- **Escenarios hibridos**:
+**Escenarios hibridos**:  
+
 - Entiendo que es el paso natural cuando se quiere migrar de on premise a la nube.
 - Que mi app corra on premise y si la demanda sube por encima de lo que soporto fisicamente, desborde en la nube.
 - Proveer Diaster Recovery a mi app (no estoy 100% seguro de esto).
 
-- **Escenarios Publicos**
+**Escenarios Publicos**  
+
 - Que mi app requiera elasticidad, digamos pueda soportar temporalidades como Black Friday.
 - Validar ideas de negocio rapidamente, digamos quiero lanzar mi app y necesito contar con un servidor que no tengo.
 - Lanzar mi app globalmente, digamos que quiero que mi app corra tan bien en Brazil como en Australia, con las distintas regiones podría hacerlo.
