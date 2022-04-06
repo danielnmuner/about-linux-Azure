@@ -879,11 +879,11 @@ La **Superficie de Ataque** es el conjunto de vulnerabilidades o datos conocidos
 
 - Uso de [nmap](nmap.org):
 
-> `-sV` Service/version info (Información acerca de los puertos abiertos).
-> `-sC` Permite utilizar el motor de scripts.
-> `-O` Habilita la detección de OS.
-> `-p-` Escanea todos los puertos.
-> `-oA` Envía la salida a un archivo
+> - `-sV` Service/version info (Información acerca de los puertos abiertos).
+> - `-sC` Permite utilizar el motor de scripts.
+> - `-O` Habilita la detección de OS.
+> - `-p-` Escanea todos los puertos.
+> - `-oA` Envía la salida a un archivo
 
 ### Lynis: Herramientas de auditoria de seguridad en Linux
 ---
