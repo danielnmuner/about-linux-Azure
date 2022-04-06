@@ -21,6 +21,7 @@
 - [Entendiendo la membresía de los grupos](#entendiendo-la-membresía-de-los-grupos)
 - [Usando PAM para el control de acceso de usuarios](#usando-pam-para-el-control-de-acceso-de-usuarios)
 - [Autenticación de clientes y servidores sobre SSH](#autenticación-de-clientes-y-servidores-sobre-ssh)
+- [Configurando DNS con bind](#configurando-dns-con-bind)
 
 ### **Distribuciones más utilizadas de Linux**
 1. Vamos a usar dos distribuciones de Linux: Ubuntu Server en su versión 18.04 y Rocky-8.5 RedHat.
@@ -369,11 +370,49 @@ PasswordAuthentication no
 #PermitEmptyPasswords no
 ```
 > Ahora siempre que realizemos cambios sera necesario reiniciar `ssh`
-> `sudo systemctl stop ssh`
-> `sudo systemctl start ssh`
+> `sudo systemctl stop ssh` para deneter ssh
+> `sudo systemctl start ssh` para iniciar ssh.
 
 - También podemos usar el comando `ssh -vvvv danmuner@192.168.xx.xx` para ver la información o los errores de nuestra conexión con el servidor.
 
+### Configurando DNS con bind
+---
+**Contexto histórico de los DNS**
+En Junio de 1983 alrededor de 70 sitios estuvieron conectados a la red de ciencias de la computación, permitiendo de esta forma la unión de algunos establecimientos gubernamentales, científicos y universitarios para que pudieran compartir datos, por esta razón los archivos de host no eran suficientes para hacer la replicación entre sitios, por este motivo en noviembre de 1983 se publicó el RFC 882 que define el servicio de nombre de dominios. Paso siguiente en octubre de 1984 se crearon 7 TLDs (Dominios de nivel superior) o también conocidos como dominios de propósito general .arpa, .com, .org, .edu, .gov, .mil y la letra de los países respetando su código ISO [1]
 
+**Instalación de Bind**
+1. Para realizar el proceso de instalación de `bind` lo primero que realizaremos es verificar que bind se encuentre en los repositorios, para esto utilizaremos otro gestor de paquetes llamado `aptitude`, para instalarlo simplemente diremos 
+ - `sudo apt install aptitude`.
 
+2. Con aptitude instalado buscaremos el paquete `bind` utilizando para ellos una expresión regular.
+ - `aptitude search "?name(^bind)"`
 
+3. Instalamos bind. El proceso de instalación se realiza con `sudo apt install -y bind9` , la opción `-y` es para confirmar que si queremos instalar el paquete en mención.
+
+4. Validamos la instalación con `netstat` y verificaremos que el puerto 53 este escuchando asi `sudo netstat -ltnp`. Sabemos que es el puerto 53 xxx.xxx.xxx.xxx:53 porque despues de los dos puntos aparece el numero del puerto.
+5. Para realizar consultas al DNS podemos utilizar varias herramientas, entre ellas `dig`, que me permiten conocer más al respecto del nombre de dominio, para ello usaremos el dominio `platzi.com` y lo buscaremos en la máquina `local`, es decir `127.0.0.1`.
+
+- `dig www.platzi.com @127.0.0.1` Nos interesa la parte de respuesta y la de tiempo de ejecución para validar que la respuesta se dio desde localhost.
+
+6. Paso siguiente después de instalarlo es verificar todo lo que viene incluido dentro del paquete como lo son los archivos de configuración manuales entre otros, para esto podemos hacer uso de `dpkg -L bind9`.
+
+7. El archivo de configuración principal será `/etc/bind/named.conf`, también tenemos el archivo `/etc/bind/rndc.key` en este se puede configurar la clave que se puede usar para obtener acceso al nombre de dominio.
+8. Podemos ver la versión de bind de dos formas `named -v` o una versión extendida con `named -V`
+
+9. Si deseas adquirir tu DNS, tienes varias opciones:
+
+   - Namecheap
+   - Hover
+   - Route 53
+
+10. Como cliente tienes varias opciones para configurar tus **DNS**, lo que influirá directamente en tu velocidad, seguridad o reputación. Para eso te daré algunas opciones, el orden no significa nada:
+
+  - OpenDns
+  - Google DNS
+  - Neustar UltraDNS
+  - Cloudflare
+  - quad
+  - Public DNS
+  - Yandex DNS
+  
+11. Existe una herramienta que nos permite seleccionar cuál será el **DNS** que debemos utilizar basados en nuestra ubicación y nuestras búsquedas, se llama `namebench`. Para ello sólo basta instalarlo y ejecutarlo en la máquina cliente y con esto obtendremos sugerencias al respecto. [namebanch](https://tools.ietf.org/html/rfc920)
