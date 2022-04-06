@@ -23,6 +23,7 @@
 - [Autenticación de clientes y servidores sobre SSH](#autenticación-de-clientes-y-servidores-sobre-ssh)
 - [Configurando DNS con bind](#configurando-dns-con-bind)
 - [Arranque, detención y recarga de servicios](#arranque-detención-y-recarga-de-servicios)
+- [NGINX y Apache en Ubuntu server](#nginx-y-apache-en-ubuntu-server)
 
 ### **Distribuciones más utilizadas de Linux**
 1. Vamos a usar dos distribuciones de Linux: Ubuntu Server en su versión 18.04 y Rocky-8.5 RedHat.
@@ -440,3 +441,80 @@ En Junio de 1983 alrededor de 70 sitios estuvieron conectados a la red de cienci
 - `sudo journalctl --list-boots`: muestra la lista de booteos de la computadora.
 - `sudo journalctl -p (critic, info, warning, error)`: filtrar los logs por el tipo de mensaje.
 - `sudo journalctl -o json`: ver los logs en formato JSON.
+
+### NGINX y Apache en Ubuntu server
+---
+**NGINX** y **Apache** son **softwares** para montar servidores web, puedes realizar la instalación de ambos en el sistema operativo, teniendo como base que pueden estar corriendo al mismo tiempo, **siempre y cuando no estén a la espera de conexiones por el mismo puerto**.
+
+- Para validar los puertos que tienen un proceso activo usamos:
+
+`sudo netstat -tulpn`
+
+- Podríamos tener una infraestructura donde **NGINX** puede servir como proxy y **Apache** como servidor web.
+
+![nginx-apache](https://user-images.githubusercontent.com/60556632/161886398-08ae9909-c2a3-4e43-ad65-fe5de4d8c2ff.png)
+
+- Si revisamos las estadísticas podemos ver que **Apache** aún es el líder del mercado en servidores web, seguido por **NGINX**, es por esta razón que veremos la instalación y configuración de ambos.
+![nginx-vs-apache](https://user-images.githubusercontent.com/60556632/161886566-cabd0b68-4c16-408f-a969-a72bba60f682.png)
+ 
+ - Existen en internet artículos interesantes de comparación entre ambos y el caso de uso de cada uno de ellos.
+    - [Apache-vs-Nginx](https://www.digitalocean.com/community/tutorials/apache-vs-nginx-practical-considerations) y 
+    - [What-is-Nginx](https://www.nginx.com/faq/what-is-nginx-how-different-is-it-from-e-g-apache/)
+
+#### Proceso de instalación.
+
+1. Installacion
+
+**Apache**
+Ejecuta el siguiente comando
+- `sudo apt install apache2`
+
+**NGINX**
+Ejecuta el siguiente comando
+
+`sudo apt install nginx nginx-extras`
+
+2. Para verificar si los servicios está corriendon se debe ejecutar los siguientes comandos:
+   - `systemctl status apache2`
+   - `systemctl status nginx`
+
+3. Si se siguió el orden de instalación, **NGINX** no debe estar ejecutándose, pues por defecto intentará levantarse en el puerto 80, el cual ya se encuentra ocupado por **Apache**, para ello cambiaremos el puerto de Apache al puerto alterno http 8080.
+
+   - `sudo nano /etc/apache2/ports.conf`
+   - A continuación tenemos que cambiar el puerto al _8080_, para esto se debe cambiar la instrucción `Listen _8080_` dentro del documento `ports.conf`.
+   - Después abrimos nuestro archivo de configuración de *Apache* `sudo nano /etc/apache2/sites-available/000-default.conf` y cambiamos el virtualhost a `8080 <VirtualHost *:8080>`
+4. Después realizamos el proceso de detener **apache2** y volverlo a encender, con los siguientes comandos.
+   - `sudo systemctl restart apache2`
+   - `systemctl status apache2`
+   - `systemctl status nginx`
+ 
+- Ambos sitios deberían estar activos y en ejecución.
+Paso siguiente, dirígete al archivo de configuración de **NGINX** donde te asegurarás que exista una directiva en el location llamada `proxy_pass` que contenga lo siguiente: `proxy_pass http://127.0.0.1:8080`
+
+![Location-Proxy](https://user-images.githubusercontent.com/60556632/161887494-bc55c6c7-f27e-4971-bc8b-ede07e564bbb.png)
+
+5. Si por alguna razón el servidor **Apache** no se encuentra en la misma máquina, debemos cambiar la dirección IP y el puerto respectivo.
+
+    - Apache tiene un comando para activar sitios que es `a2ensite` que recibe como parámetro el archivo de configuración definido en `/etc/apache2/sites-available`. **NGINX** no cuenta con este comando, motivo por el cual se tiene un enlace __blando__, es decir, cuando creemos un archivo de configuración en `/etc/nginx/sites-available` debemos ejecutar `sudo ln -s /etc/nginx/sites-available/configuracion_nginx /etc/nginx/sites-enabled/`
+
+- **Apache** también me permite deshabilitar sitios y agregar módulos
+
+`sudo a2dissite 000-default`
+
+`sudo a2enmod rewrite headers env dir mime`
+
+6. Si queremos activar `letsecrypt` en **NGINX**, debemos agregar una línea en el `.htaccess` en la ruta `/var/www/html/nombre_host/.htaccess`. La linea es `SetEnvIf X-Forwarded-Proto https`
+
+![letsecrypt](https://user-images.githubusercontent.com/60556632/161887875-11e3ab43-ccb4-4a1f-9736-353058fff9ac.png)
+
+7. **Conclusión**
+Antes de realizar la elección de uno de los dos, deberías mirar el tipo de proyecto en el que estás trabajando y que se acople mejor a tus necesidades, es un proceso de evaluación y prueba en cada uno de los aspectos que esperamos como administradores de sistemas.
+Existen múltiples diferencias entre ambos proyectos, que tienen impacto real en el rendimiento y tiempo de configuración para lograr que el servicio quede funcionando perfectamente. Algunos prefieren NGINX por la sintaxis de configuración, otros eligen basado en las estadísticas presentadas y otros por simple experiencia con trabajos anteriores. Yo te recomiendo probar ambos y elegir según el proyecto, o quizás puedes usarlos ambos y sacar lo mejor de cada uno.
+
+
+
+
+
+
+
+
