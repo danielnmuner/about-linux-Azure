@@ -33,6 +33,7 @@
 - [Automatizando tareas desde la terminal](#automatizando-tareas-desde-la-terminal)
 - [Crontab](#crontab)
 - [Entendiendo la gestión de vulnerabilidades](#entendiendo-la-gestión-de-vulnerabilidades)
+- [¿Qué es una superficie de ataque? Principio del menor privilegio](#¿-qué-es-una-superficie-de-ataque-?-principio-del-menor-privilegio)
 
 ### **Distribuciones más utilizadas de Linux**
 1. Vamos a usar dos distribuciones de Linux: Ubuntu Server en su versión 18.04 y Rocky-8.5 RedHat.
@@ -823,7 +824,7 @@ A continuación te muestro lo que se imprime en la pantalla al correr el comando
 
 - Lo siguiente sería definir la periodicidad de nuestro cron, para ello podemos hacer pruebas en el sitio [crontab](https://crontab.guru). Nosotros queremos que nuestra copia se ejecute todos los días a las 03:15 de la mañana, pues es el momento donde menos tráfico tenemos en nuestra base de datos.
 
-### Entendiendo la gestión de vulnerabilidades
+### Entendiendo la gestión de vulnerabilidades [CVE-2017-16995](https://www.incibe-cert.es/alerta-temprana/vulnerabilidades/cve-2017-16995)
 ---
 **Malas prácticas**
 
@@ -844,8 +845,59 @@ A continuación te muestro lo que se imprime en la pantalla al correr el comando
 
 **Recuerda que la seguridad informática no es un producto, sino un proceso constante**.
 
+### ¿Qué es una superficie de ataque? Principio del menor privilegio
+---
+
+La **Superficie de Ataque** es el conjunto de vulnerabilidades o datos conocidos que pueden ser explotados por un atacante informático. Cada servicio de nuestras aplicaciones es un nuevo punto de entrada a nuestra red. No solo debemos proteger nuestros servidores, también debemos proteger todos los servicios que corren en él.
+
+**Lynis** es una herramienta que analiza nuestros servidores y para darnos algunas recomendaciones. La estudiaremos más a fondo en una próxima clase. También existen frameworks o manuales como **[OWASP](https://owasp.org/)** que nos explican las características de aplicaciones web vulnerables y cómo programarlas de forma segura.
+
+### El [firewall](https://www.youtube.com/watch?v=Dj5AJzw4HlI) y sus reglas
+---
+1. Los Firewalls son herramientas que monitorean el tráfico de nuestras redes para identificar amenazas e impedir que afecten nuestro sistema.
+
+2. Recuerda que la seguridad informática es un proceso constante, así que ninguna herramienta incluyendo el **`firewall`** puede garantizarnos seguridad absoluta.
+
+3. En Ubuntu Server podemos usar **ufw** _Uncomplicated Firewall_ para crear algunas reglas, verificar los puertos que tenemos abiertos y realizar una protección básica de nuestro sistema:
+
+- `sudo ufw (enable, reset, status)`: activar, desactivar o ver el estado y reglas de nuestro firewall.
+- `sudo ufw allow numero-puerto`: permitir el acceso por medio de un puerto específico. Recuerda que el puerto 22 es por donde trabajamos con SSH.
+- `sudo ufw status numbered`: ver el número de nuestras reglas.
+- `sudo ufw delete numero-regla`: borrar alguna de nuestras reglas.
+- `sudo ufw allow from numero-ip proto tcp to any port numero-puerto`: restringir el acceso de un servicio por alguno de sus puertos a solo un número limitado de IPs específicas.
+- `sudo ufw app list`: Para ver las apps permitidas
+
+**Recomendación**
+> Abrir al público únicamente el puerto `80 http`, `443 https`. 
+> Para un conjunto de IP’s específicas, habilitar el puerto `22 ssh`.
+
+### Escaneo de puertos con NMAP y NIKTO desde [Kali Linux](https://platzi.com/clases/1583-ethical-hacking/19725-instalacion-del-entorno-de-pruebas-kali-linux/)
+---
+**Comandos**
+- `nmap -sV -sC -0 -oA nombre_de_archivo dirección_ip_del_servidor`: Realiza un mapeo de la red
+- `nikto -h ip_del_host -o nombre_de_archivo`: Escanea vulnerabilidades en un servidor.
+
+- Uso de [nmap](nmap.org):
+
+> `-sV` Service/version info (Información acerca de los puertos abiertos).
+> `-sC` Permite utilizar el motor de scripts.
+> `-O` Habilita la detección de OS.
+> `-p-` Escanea todos los puertos.
+> `-oA` Envía la salida a un archivo
+
+### Lynis: Herramientas de auditoria de seguridad en Linux
+---
+**[Lynis](https://cisofy.com/documentation/lynis/)**: Herramientas de auditoria de seguridad en Linux
+- `sudo lynis audit system`: Realiza un escaneo del sistema operativo, mostrándonos sugerencias y el estado de peligro de ciertos detalles en nuestra distribución.
+
+- [Aprende a auditar-seguridad-Linux](https://www.welivesecurity.com/la-es/2014/09/01/tutorial-de-lynis-aprende-auditar-seguridad-linux/)
 
 
 
 
 
+
+
+
+
+ 
