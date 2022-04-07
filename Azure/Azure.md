@@ -158,7 +158,7 @@ Agrupación de cuentas de usuario y recursos creados por estas cuentas. Puede te
 
 Administran el acceso, las directivas y cumplimiento de las suscripciones. Las suscripciones heredan las condiciones de su grupo.
 
-### Suscripciones y grupos de administración
+### [Suscripciones y grupos de administración](https://docs.microsoft.com/es-mx/learn/modules/azure-architecture-fundamentals/overview)
 ---
 Se necesita de una suscripción de Azure para utilizar sus servicios:
 
