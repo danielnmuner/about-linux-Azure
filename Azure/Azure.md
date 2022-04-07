@@ -131,5 +131,7 @@ FaaS es esencialmente una versión más simple de PaaS. Conocida como una arquit
 ---
 Microsoft Azure es una creciente colección de servicios en la nube integrados que los desarrolladores y los profesionales de TI utilizan para crear, implementar y administrar aplicaciones a través de nuestra red global de centros de datos. Con Azure, obtiene la libertad de crear e implementar donde quiera, utilizando las herramientas, las aplicaciones y los marcos que prefiera.
 
+![Qué-es-Azure](https://user-images.githubusercontent.com/60556632/162094209-01b393cf-14b2-4827-8270-04c70740553c.png)
+
 
 
