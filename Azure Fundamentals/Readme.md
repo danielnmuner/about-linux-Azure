@@ -17,5 +17,21 @@
 | 🦧 [Prueba de conocimientos](https://docs.microsoft.com/es-mx/learn/modules/intro-to-azure-fundamentals/knowledge-check) |
 | 🦧 [Resumen](https://docs.microsoft.com/es-mx/learn/modules/intro-to-azure-fundamentals/summary) |
 
+### Modulo 2- Conceptos fundamentales de Azure📱  
+
+- **Objetivos de aprendizaje**  
+
+  - > Identificar las ventajas y las consideraciones de los servicios en la nube.
+  - > Describir las diferencias que hay entre las categorías de servicios en la nube.
+  - > Describir las diferencias que hay entre los tipos de informática en la nube.
+
+| **Unidades Modulo 2️⃣** |
+| --- |
+| 🦔 [Introducción](https://docs.microsoft.com/es-mx/learn/modules/fundamental-azure-concepts/introduction) |
+| 🦔 [Descripción de los distintos tipos de modelos en la nube](https://docs.microsoft.com/es-mx/learn/modules/fundamental-azure-concepts/types-of-cloud-computing) |
+| 🦔 [Descripción de las ventajas y las consideraciones relativas a la nube](https://docs.microsoft.com/es-mx/learn/modules/fundamental-azure-concepts/benefits-of-cloud-computing) |
+| 🦔 [Descripción de distintos servicios en la nube](https://docs.microsoft.com/es-mx/learn/modules/fundamental-azure-concepts/categories-of-cloud-services) |
+| 🦔 [Prueba de conocimientos](https://docs.microsoft.com/es-mx/learn/modules/fundamental-azure-concepts/knowledge-check) |
+| 🦔 [Resumen](https://docs.microsoft.com/es-mx/learn/modules/fundamental-azure-concepts/summary) |
 
 
