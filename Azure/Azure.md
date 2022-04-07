@@ -8,6 +8,7 @@
 
 - **Componentes de Azure**
    - [Qué es Azure](#qué-es-azure)
+   - [Cuentas de Azure](#cuentas-de-azure)
 
 ### Niveles de Servicio de Azure y Certificaiones
 ---
@@ -135,5 +136,52 @@ Microsoft Azure es una creciente colección de servicios en la nube integrados q
 
 ![Qué-es-Azure](https://user-images.githubusercontent.com/60556632/162094209-01b393cf-14b2-4827-8270-04c70740553c.png)
 
+### Cuentas de Azure
+---
+**Estructura de una cuenta de Azure**
+![Recursos](https://user-images.githubusercontent.com/60556632/162201105-63449a07-9a10-434b-a192-b46df4bbcf71.png)
+
+
+- **Recursos**  
+
+Instancias de los servicios disponibles: Máquinas virtuales, discos duros y bases de datos. Los recursos solo pueden pertenecer a un único grupo de recursos, pero los recursos de un grupo se pueden comunicar con los recursos de otro.
+
+- **Grupos de recursos**  
+
+Contenedor lógico donde se implementan y administran recursos de Azure. Un recurso puede pertenecer a un solo GR pero puede comunicarse con recursos de otro GR.
+
+- **Suscripciones**  
+
+Agrupación de cuentas de usuario y recursos creados por estas cuentas. Puede tener límites o cuotas definidas.
+
+**Grupos de administración**  
+
+Administran el acceso, las directivas y cumplimiento de las suscripciones. Las suscripciones heredan las condiciones de su grupo.
+
+### Suscripciones y grupos de administración
+---
+Se necesita de una suscripción de Azure para utilizar sus servicios:
+
+- **Desarrollador**: Pagas por los servicios a medida que los utilices.
+- **Prueba**: experimentar de manera gratuita.
+- **Suscripción**: a través de un partner compras servicios de Azure.
+- **Estudiante**: a través de un email autorizado (.edu)
+
+**Limites**  
+
+- **Facturación**: forma de facturarse. Cada suscripción tiene su factura.
+- **Control de acceso**: cada suscripción tiene directivas de acceso.
+
+**¿Cuándo se necesita más suscripciones?**  
+
+- **Entorno**: separación de entornos de trabajos como desarrollo, pruebas, aislamiento de datos, entre otros.
+- **Estructura Organizacional**: limitaciones según presupuesto, tiempo, por equipos o acceso a recursos.
+- **Facturación**: para facilitar el seguimiento de costos según entornos como producción, desarrollo o pruebas.
+- **Límites por suscripción**: Pueden haber algunas limitaciones de hardware por suscripción, entonces es necesario crear nuevas.
+
+**Grupos de Administración**
+
+Hasta 10 000 grupos de administración en un único directorio.
+El árbol de grupo de administración puede admitir hasta seis niveles de profundidad. Cada grupo de administración y suscripción solo puede admitir un elemento primario. Cada grupo de administración puede tener muchos elementos secundarios. Todas las suscripciones y grupos de administración están dentro de una única jerarquía en cada directorio.
 
 
