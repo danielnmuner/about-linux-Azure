@@ -1,12 +1,12 @@
 ## Curso Introduccion a la Nube 🌍☁️💻
 
-- Introduccion al computo en la nube
+- **Introduccion al computo en la nube**
    - [Niveles de Servicio de Azure](#niveles-de-servicio-de-azure-y-certificaciones)
    - [Qué es la nube: ventajas y características](#qué-es-la-nube-:-ventajas-y-características)
    - [Modelos de servicio: IaaS, PaaS, SaaS y serverless](#modelos-de-servicio-:-iaas-,-paas-,-saas-y-serverless)
    - [Tipos de nube: pública, privada e híbrida](#tipos-de-nube-:-pública-,-privada-e-híbrida)
 
-- Componentes de Azure
+- **Componentes de Azure**
    - [Qué es Azure](#qué-es-azure)
 
 ### Niveles de Servicio de Azure y Certificaiones
