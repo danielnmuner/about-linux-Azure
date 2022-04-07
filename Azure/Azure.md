@@ -7,6 +7,7 @@
    - [Tipos de nube: pública, privada e híbrida](#tipos-de-nube-:-pública-,-privada-e-híbrida)
 
 - Componentes de Azure
+   - [Qué es Azure](#qué-es-azure)
 
 ### Niveles de Servicio de Azure y Certificaiones
 ---
@@ -125,6 +126,10 @@ FaaS es esencialmente una versión más simple de PaaS. Conocida como una arquit
 - Que mi app requiera elasticidad, digamos pueda soportar temporalidades como Black Friday.
 - Validar ideas de negocio rapidamente, digamos quiero lanzar mi app y necesito contar con un servidor que no tengo.
 - Lanzar mi app globalmente, digamos que quiero que mi app corra tan bien en Brazil como en Australia, con las distintas regiones podría hacerlo.
+
+### Qué es Azure
+---
+Microsoft Azure es una creciente colección de servicios en la nube integrados que los desarrolladores y los profesionales de TI utilizan para crear, implementar y administrar aplicaciones a través de nuestra red global de centros de datos. Con Azure, obtiene la libertad de crear e implementar donde quiera, utilizando las herramientas, las aplicaciones y los marcos que prefiera.
 
 
 
