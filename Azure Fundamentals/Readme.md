@@ -21,9 +21,9 @@
 
 - **Objetivos de aprendizaje**  
 
-  - > Identificar las ventajas y las consideraciones de los servicios en la nube.
-  - > Describir las diferencias que hay entre las categorías de servicios en la nube.
-  - > Describir las diferencias que hay entre los tipos de informática en la nube.
+  > - Identificar las ventajas y las consideraciones de los servicios en la nube.
+  > - Describir las diferencias que hay entre las categorías de servicios en la nube.
+  > - Describir las diferencias que hay entre los tipos de informática en la nube.
 
 | **Unidades Modulo 1️⃣** |
 | --- |
