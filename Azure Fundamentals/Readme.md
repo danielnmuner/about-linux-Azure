@@ -52,4 +52,25 @@
 | 🦝 [Prueba de conocimientos](https://docs.microsoft.com/es-mx/learn/modules/azure-architecture-fundamentals/knowledge-check) |
 | 🦝 [Resumen](https://docs.microsoft.com/es-mx/learn/modules/azure-architecture-fundamentals/summary) |
 
- 
+ ### Modulo 1.3 Exploración de los servicios de Azure Compute
+
+- **Objetivos de aprendizaje**  
+
+  > - Azure Virtual Machines
+  > - Azure App Service
+  > - Azure Container Instances
+  > - Azure Kubernetes Service
+  > - Azure Functions
+  > - Azure Virtual Desktop
+
+| **Unidades Modulo 3** |
+| --- |
+| 👽 [Introducción](https://docs.microsoft.com/es-mx/learn/modules/azure-compute-fundamentals/introduction) |
+| 👽 [Introducción a los servicios de Azure Compute](https://docs.microsoft.com/es-mx/learn/modules/azure-compute-fundamentals/overview) |
+| 👽 [Decisión de cuándo usar Azure Virtual Machines](https://docs.microsoft.com/es-mx/learn/modules/azure-compute-fundamentals/azure-virtual-machines) |
+| 👽 [Decisión de cuándo usar Azure App Service](https://docs.microsoft.com/es-mx/learn/modules/azure-compute-fundamentals/azure-app-services) |
+| 👽 [Decisión de cuándo usar Azure Container Instances o Azure Kubernetes Service](https://docs.microsoft.com/es-mx/learn/modules/azure-compute-fundamentals/azure-container-services) |
+| 👽 [Decisión de cuándo usar Azure Functions](https://docs.microsoft.com/es-mx/learn/modules/azure-compute-fundamentals/azure-functions) |
+| 👽 [Decisión de cuándo usar Azure Virtual Desktop](https://docs.microsoft.com/es-mx/learn/modules/azure-compute-fundamentals/windows-virtual-desktop) |
+| 👽 [Prueba de conocimientos](https://docs.microsoft.com/es-mx/learn/modules/azure-compute-fundamentals/knowledge-check) |
+| 👽 [Resumen](https://docs.microsoft.com/es-mx/learn/modules/azure-compute-fundamentals/summary) |
