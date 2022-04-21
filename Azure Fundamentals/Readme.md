@@ -1,6 +1,7 @@
 
 #### [Microsoft Azure Fundamentals | AZ 900](https://www.youtube.com/playlist?list=PL3hNLk-aR0J9K5cvCIsQiwjMvO8UFFr35)
-#### [Podcast Bits Café – El futuro de la informática en la nube](https://azurelate.show/podcast/episode-013/)
+#### [Podcast Bits Café – El futuro de la informática en la nube](https://azurelate.show/podcast/episode-013/)\
+#### [Modulos AZ-900](https://docs.microsoft.com/es-mx/users/cloudskillschallenge/collections/5d3kh31eg83o?WT.mc_id=cloudskillschallenge_495571f3-ba53-426a-b5cc-2885cf229e8b)
 ### Modulo 1.0 - Hospedaje de una aplicación web con Azure App Service📱
 
 - **Objetivos de aprendizaje**  
