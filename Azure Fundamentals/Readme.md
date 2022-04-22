@@ -78,3 +78,12 @@
 | 👽 [Decisión de cuándo usar Azure Virtual Desktop](https://docs.microsoft.com/es-mx/learn/modules/azure-compute-fundamentals/windows-virtual-desktop) |
 | 👽 [Prueba de conocimientos](https://docs.microsoft.com/es-mx/learn/modules/azure-compute-fundamentals/knowledge-check) |
 | 👽 [Resumen](https://docs.microsoft.com/es-mx/learn/modules/azure-compute-fundamentals/summary) |
+
+#### Ejercicios Fundamentos AZ
+1. [Ejercicio: Creación de una base de datos SQL](https://docs.microsoft.com/es-es/learn/modules/azure-database-fundamentals/exercise-create-sql-database)
+2. []()
+3. []()
+4. []()
+5. []()
+6. []()
+7. []()
