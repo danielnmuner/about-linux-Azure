@@ -2,7 +2,21 @@
 #### [Microsoft Azure Fundamentals | AZ 900](https://www.youtube.com/playlist?list=PL3hNLk-aR0J9K5cvCIsQiwjMvO8UFFr35)
 #### [Podcast Bits Café – El futuro de la informática en la nube](https://azurelate.show/podcast/episode-013/)
 #### [Modulos AZ-900](https://docs.microsoft.com/es-mx/users/cloudskillschallenge/collections/5d3kh31eg83o?WT.mc_id=cloudskillschallenge_495571f3-ba53-426a-b5cc-2885cf229e8b)
-#### [Ruta Introduccion a la Nube](https://docs.microsoft.com/es-es/learn/paths/az-900-describe-core-azure-services/?ns-enrollment-type=Collection&ns-enrollment-id=xgg5bxjg1owzm7)
+#### Ruta Introduccion a la Nube
+- [Redes](https://docs.microsoft.com/es-es/learn/paths/az-900-describe-core-azure-services/?ns-enrollment-type=Collection&ns-enrollment-id=xgg5bxjg1owzm7)
+- [Bases de Datos](https://docs.microsoft.com/es-es/learn/modules/introduction-sql-server-linux/?ns-enrollment-type=Collection&ns-enrollment-id=xgg5bxjg1owzm7)
+- [Azure App Service](https://docs.microsoft.com/es-es/learn/modules/host-a-web-app-with-azure-app-service/?ns-enrollment-type=Collection&ns-enrollment-id=xgg5bxjg1owzm7)
+- [Azure Functions](https://docs.microsoft.com/es-es/learn/modules/create-serverless-logic-with-azure-functions/?ns-enrollment-type=Collection&ns-enrollment-id=xgg5bxjg1owzm7)
+- [Evaluar conocimiento AZ-900](https://www.daypo.com/)
+- [Concejos Platzi I](https://youtu.be/_lXVcxbfXwA?t=556)
+- [Concejos Platzi II](https://youtu.be/j5a2lPrT7LQ)
+- [Concejos Platzi III](https://youtu.be/YNYE_Ob8VXU)
+- [Concejos Platzi IV](https://youtu.be/pq3evAKAj-U)
+- [Concejos Platzi V](https://youtu.be/e2eTzQONPjs)
+- [Concejos Platzi VI](https://youtu.be/UwKFnsNnAi0)
+- [Concejos Platzi VII](https://youtu.be/-Q3NGWnOEQ4)
+- [Concejos Platzi VIII]()
+
 ### Modulo 1.0 - Hospedaje de una aplicación web con Azure App Service📱
 
 - **Objetivos de aprendizaje**  
