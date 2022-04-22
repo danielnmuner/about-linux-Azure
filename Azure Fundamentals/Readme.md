@@ -79,6 +79,7 @@
 | 👽 [Prueba de conocimientos](https://docs.microsoft.com/es-mx/learn/modules/azure-compute-fundamentals/knowledge-check) |
 | 👽 [Resumen](https://docs.microsoft.com/es-mx/learn/modules/azure-compute-fundamentals/summary) |
 
+#### Reto Platzi [Seguridad](https://platzi.com/clases/2200-introduccion-azure/38253-seguridad/)
 #### Ejercicios Fundamentos AZ
 1. [Ejercicio: Creación de una base de datos SQL](https://docs.microsoft.com/es-es/learn/modules/azure-database-fundamentals/exercise-create-sql-database)
 2. []()
