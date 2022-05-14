@@ -38,9 +38,9 @@ MariaDB es un Fork de MySQL en la medida que MySQL se comienza a privatizar con 
   - Indicamos la informacion del usuario y su password luego `Revisar y Crear`. 
   - Luego abrimos nuestro recurso
   ![image](https://user-images.githubusercontent.com/60556632/168407360-98209822-70d8-4d5f-8465-754091f118f0.png)
-  - Configuramos la direccion IP desde `Seguridad de Conexion` y guardamos.
+  - Configuramos la direccion IP desde `Seguridad de Conexion`.
     ![image](https://user-images.githubusercontent.com/60556632/168408016-11cb0af7-af31-4d68-9754-02ed6c0ab28c.png)
-
+  - Finalmente antes de guardar **desabilitamos** SSL por praticidad para este proyecto pero esto no se debe realizar en produccion y se deberia configurar `SSL`
 - **Desplegar la misma base de datos desde CLI para eso abrimos bash de azure**
 ---
   ```sh
@@ -93,5 +93,55 @@ values
 commit;
 select * from empleados;
 ```
+- **Desarrollar aplicacion VSCode que consumira los datos de la BD**
+    - Creamos un proyecto de **tipo consola** desde VSCode `New Terminal` y en a terminal colocamos `dotnet new nombre-consola`.
+    - Agregamos los siguiente **pluggins** para soportar la conexion con MySql: 1. `C#`, 2. `MySQL Syntax` 3. `MySQL` 4. ``NuGet Package Manager`.
+    - Abrimos archivo Program.cs` -> `Ctlr + Shit + P` -> `MySqlConnector` -> `Cualquier version que no sea Beta` -> `MySqlData` y luego agregamos las librerias a nuestro archivo `Program.cs`
 
+```sh
+#Insetar librerias
+using MySql.Data.MySqlClient;
+using System.Threading.Tasks;
+```
+  - Colocamos este codigo despues de la funcion `static async Task Main(string[] args)`
+```sh
+var builder = new MySqlConnectionStringBuilder
+{
+    Server = "mysqlrdbms-server.mysql.database.azure.com",
+    Database = "rrhdb",
+    UserID = "myadmin@mysqlrdbms-server",
+    Password = "CEdndm1246",
+    #Indica que no tendremos SSl
+    SslMode = MySqlSslMode.None
+};
+
+#Abrimos la conexion como una tarea asincrona
+using (var conn = new MySqlConnection(builder.ConnectionString)) {
+    Console.WriteLine("Opening connection");
+    await conn.OpenAsync();
+    using (var command = conn.CreateCommand()) {
+    #Insertar datos
+        command.CommandText = @"INSERT INTO empleados(id,nombre,salario,fecha_nacimiento)
+                                VALUES(@id1, @nombre1, @salario1, @fecha_nacimiento1);";
+        command.Parameters.AddWithValue("@id1", "32");
+        command.Parameters.AddWithValue("@nombre1", "Roberto Antonio Alferes Gomez");
+        command.Parameters.AddWithValue("@salario1", "400");
+        command.Parameters.AddWithValue("@fecha_nacimiento1", "1994-09-24");
+        int rowCount = await command.ExecuteNonQueryAsync();
+        Console.WriteLine(String.Format("Number of rows inserted={0} ", rowCount));
+    }
+}
+
+    Console.WriteLine("Hello, World!");
+```
   
+    - Ejecutamos la applicacion con `dotnet run` y basicamente lo que sucede es que se insertan:
+    ```sh
+     	command.Parameters.AddWithValue("@id1", "32");
+        command.Parameters.AddWithValue("@nombre1", "Roberto Antonio Alferes Gomez");
+        command.Parameters.AddWithValue("@salario1", "400");
+        command.Parameters.AddWithValue("@fecha_nacimiento1", "1994-09-24");
+    ```
+    - Y ahora consultar el id=32 desde workbech.
+    
+    
